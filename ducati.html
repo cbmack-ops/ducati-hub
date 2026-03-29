@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ducati — Born from Fire</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #ffffff;
+    color: #111827;
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV — matches site */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    background: rgba(240,240,240,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #c4c4c4;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.75rem;
+    letter-spacing: 0.05em;
+    color: #1a3560;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.25rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #555555;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: #1a3560; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+    .nav-links a { font-size: 0.7rem; letter-spacing: 0.1em; }
+  }
+
+  /* HERO — light background with animated grid */
+  .hero {
+    position: relative;
+    height: 90vh;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 6vw 8vh;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 60% 40%, rgba(26,53,96,0.07) 0%, transparent 60%),
+      linear-gradient(135deg, #f8fafc 0%, #eef2f7 50%, #f8fafc 100%);
+    z-index: 0;
+  }
+
+  /* animated grid — subtle on white */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(26,53,96,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,53,96,0.055) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    animation: gridShift 20s linear infinite;
+  }
+
+  @keyframes gridShift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(60px); }
+  }
+
+  .hero-eyebrow {
+    position: relative; z-index: 1;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: #1a3560;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    position: relative; z-index: 1;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 13vw, 13rem);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    color: #111827;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-title span {
+    color: #1a3560;
+    display: block;
+  }
+
+  .hero-sub {
+    position: relative; z-index: 1;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #4b5563;
+    margin-top: 2rem;
+    max-width: 480px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem; right: 6vw;
+    z-index: 1;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: #9e9e9e;
+    writing-mode: vertical-rl;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, #9e9e9e, transparent);
+    margin: 1rem auto 0;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #1a3560, #9e9e9e, transparent);
+  }
+
+  /* WHITE SECTIONS */
+  .section {
+    padding: 7rem 6vw;
+    background: #ffffff;
+  }
+
+  .section.alt {
+    background: #f4f6f9;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.45em;
+    color: #1a3560;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 2px;
+    background: #1a3560;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    margin-bottom: 2.5rem;
+    color: #111827;
+  }
+
+  .section-title em {
+    color: #1a3560;
+    font-style: normal;
+  }
+
+  .body-text {
+    font-size: 1.18rem;
+    line-height: 1.9;
+    color: #1f2937;
+    max-width: 720px;
+    font-weight: 400;
+  }
+
+  .body-text p + p { margin-top: 1.5rem; }
+
+  /* XDIAVEL SECTION — light version */
+  .xdiavel-section {
+    background: #f0f4f9;
+    padding: 8rem 6vw;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid #dde3ec;
+    border-bottom: 1px solid #dde3ec;
+  }
+
+  .xdiavel-section::before {
+    content: 'XDIAVEL';
+    position: absolute;
+    right: -2vw;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(8rem, 20vw, 22rem);
+    color: rgba(26,53,96,0.05);
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .xdiavel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .xdiavel-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .spec-card {
+    background: #ffffff;
+    border: 1px solid #dde3ec;
+    border-left: 4px solid #1a3560;
+    padding: 2rem;
+    margin-top: 3rem;
+  }
+
+  .spec-card h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: #1a3560;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #edf0f4;
+    font-size: 1rem;
+  }
+
+  .spec-row:last-child { border-bottom: none; }
+  .spec-key { color: #6b7280; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; }
+  .spec-val { color: #111827; font-style: italic; }
+
+  /* GLOSSY BLACK SHOWCASE — deep blue instead of near-black */
+  .black-showcase {
+    background: #1a3560;
+    padding: 6rem 6vw;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .black-showcase::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .gloss-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 8rem);
+    color: #ffffff;
+    position: relative; z-index: 1;
+    letter-spacing: 0.08em;
+  }
+
+  .gloss-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.65);
+    margin-top: 1.5rem;
+    position: relative; z-index: 1;
+    letter-spacing: 0.1em;
+  }
+
+  /* FOOTER — matches site */
+  footer {
+    border-top: 1px solid #c4c4c4;
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    color: #1a3560;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: #9e9e9e;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">DUCATI</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="bike.html">My Bike</a></li>
+    <li><a href="ducati.html" class="active">History</a></li>
+    <li><a href="maintenance.html">Maintenance</a></li>
+    <li><a href="rides.html">Ride Log</a></li>
+    <li><a href="exam.html">M Exam</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Est. Bologna, Italy &mdash; 1926</p>
+  <h1 class="hero-title">
+    DUCATI<span>BORN FROM</span>FIRE
+  </h1>
+  <p class="hero-sub">A century of Italian obsession with speed, sound, and the art of the machine.</p>
+  <span class="scroll-hint">Scroll</span>
+</section>
+
+<div class="divider"></div>
+
+<!-- ORIGINS -->
+<section class="section">
+  <p class="section-label">Chapter 01</p>
+  <h2 class="section-title">THE <em>ORIGINS</em></h2>
+  <div class="body-text">
+    <p>In 1926, the Ducati family founded Società Scientifica Radio Brevetti Ducati in Bologna, Italy — a radio components manufacturer with little hint of the thundering legacy to come. It wasn't until after World War II, with Italy rebuilding and desperate for affordable transport, that Ducati pivoted toward motorcycles.</p>
+    <p>The earliest Ducati bikes were modest — small-displacement, practical machines born from necessity. But ambition ran deeper than practicality in Bologna. By the 1950s, engineer Fabio Taglioni had joined the firm, bringing with him a fierce intellect and the desmodromic valve system that would become Ducati's mechanical signature: a mechanism that controls valve closure mechanically rather than relying on springs, allowing higher revs and greater precision.</p>
+  </div>
+</section>
+
+<!-- RACING DNA -->
+<section class="section alt">
+  <p class="section-label">Chapter 02</p>
+  <h2 class="section-title">RACING <em>DNA</em></h2>
+  <div class="body-text">
+    <p>Ducati's identity was forged on racetracks. The 1956 125cc Grand Prix victories announced Italy's newest contender to the world. Then came the iconic 750 SuperSport, the Mike Hailwood Replica, and the 916 — a machine so sculpturally perfect that it redefined what a sportsbike could look like.</p>
+    <p>The 916, designed by Massimo Tamburini and unveiled in 1994, remains one of the most beautiful motorcycles ever built. Its single-sided swingarm, underseat exhausts, and predatory stance established the template that rivals have chased ever since. Ducati went on to dominate World Superbike championships, cementing a racing pedigree that flows directly into every road bike they build.</p>
+  </div>
+</section>
+
+<!-- XDIAVEL FEATURE -->
+<section class="xdiavel-section">
+  <div class="xdiavel-grid">
+    <div>
+      <p class="section-label">Chapter 03</p>
+      <h2 class="section-title">2022 XDIAVEL <em>S</em></h2>
+      <div class="body-text">
+        <p>The XDiavel was Ducati's answer to a question nobody thought to ask: what if a power cruiser had the soul of a superbike? Introduced in 2016 and refined continuously, the 2022 XDiavel S represents the model at its most resolved — aggressive, sumptuous, and utterly uncompromising.</p>
+        <p>Powered by a 1,262cc Testastretta DVT V-twin, the XDiavel S uses Ducati's Desmodromic Variable Timing system to deliver crushing low-end torque alongside stratospheric top-end power. The belt-driven rear wheel — a nod to American cruiser tradition — combined with forward-set footpegs gives it a laid-back riding stance that belies its sporting capability.</p>
+      </div>
+      <div class="spec-card">
+        <h3>2022 XDiavel S &mdash; Key Specs</h3>
+        <div class="spec-row"><span class="spec-key">Engine</span><span class="spec-val">1,262cc Testastretta DVT</span></div>
+        <div class="spec-row"><span class="spec-key">Power</span><span class="spec-val">152 hp @ 9,500 rpm</span></div>
+        <div class="spec-row"><span class="spec-key">Torque</span><span class="spec-val">129 Nm @ 5,000 rpm</span></div>
+        <div class="spec-row"><span class="spec-key">Drive</span><span class="spec-val">Belt final drive</span></div>
+        <div class="spec-row"><span class="spec-key">Colour</span><span class="spec-val">Glossy Black</span></div>
+        <div class="spec-row"><span class="spec-key">Electronics</span><span class="spec-val">Cornering ABS, DTC, DQS, Cruise</span></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-label">The Colour</p>
+      <h2 class="section-title">GLOSSY <em>BLACK</em></h2>
+      <div class="body-text">
+        <p>Of all the XDiavel S colour options, Glossy Black is the definitive choice. It strips away distraction, letting the bike's dramatic bodywork speak entirely through form and light. The deep black lacquer catches the sun like polished obsidian — surfaces that shift between near-invisible shadow and mirror-bright highlight as the light moves.</p>
+        <p>The contrast stitching on the solo saddle, the machined aluminium details, and the subtle silver Ducati crest all pop with quiet authority against the black canvas. This is a motorcycle that doesn't demand attention — it simply absorbs everything around it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSY BLACK SHOWCASE -->
+<div class="black-showcase">
+  <div class="gloss-title">GLOSSY BLACK</div>
+  <p class="gloss-sub">Light absorbed. Power unleashed. Form perfected.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- LEGACY -->
+<section class="section">
+  <p class="section-label">Chapter 04</p>
+  <h2 class="section-title">THE <em>LEGACY</em></h2>
+  <div class="body-text">
+    <p>Nearly a century after its founding, Ducati remains one of the few manufacturers whose motorcycles are genuinely lusted after — not just purchased. Every model carries the weight of Bologna's obsessive engineering culture, the sound of the L-twin exhaust note that owners describe as mechanical music, and a design language that treats every surface as a sculpture.</p>
+    <p>The 2022 XDiavel S is not just a motorcycle. It is the distillation of everything Ducati has learned about beauty, performance, and the particular Italian philosophy that refuses to separate the two. In Glossy Black, it is as close to perfect as two wheels and a combustion engine have ever come.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DUCATI HUB</div>
+  <p class="footer-copy">Personal ownership tracker. Not affiliated with Ducati Motor Holding.</p>
+</footer>
+
+</body>
+</html>
