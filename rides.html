@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ride Log — Ducati Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #CC0000;
+      --red-h:  #e60000;
+      --bg:     #0d0d0d;
+      --bg2:    #131313;
+      --bg3:    #1a1a1a;
+      --border: #242424;
+      --text:   #f0f0f0;
+      --dim:    #888888;
+      --muted:  #444444;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', system-ui, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(13,13,13,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: var(--red);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--red); }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 100px 2.5rem 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header-inner { max-width: 1100px; margin: 0 auto; }
+    .label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 6vw, 64px);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .page-sub {
+      margin-top: 0.75rem;
+      color: var(--dim);
+      font-size: 0.95rem;
+    }
+
+    /* MAIN */
+    main { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem 6rem; }
+
+    /* STATS */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+      border-top: none;
+      margin-bottom: 3rem;
+    }
+    .stat {
+      padding: 1.5rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--red);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    /* FORM */
+    .form-panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-row { margin-bottom: 1rem; }
+    label {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--dim);
+      margin-bottom: 0.4rem;
+    }
+    input, textarea {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.65rem 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    input:focus, textarea:focus { border-color: var(--red); }
+    textarea { resize: vertical; min-height: 80px; }
+    .btn-submit {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--red-h); }
+
+    /* RIDE LIST */
+    #log-list { border-top: 1px solid var(--border); }
+    .log-entry {
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 1.25rem;
+      align-items: start;
+      transition: background 0.2s;
+    }
+    .log-entry:hover { background: var(--bg3); }
+
+    .entry-date {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      color: var(--dim);
+      line-height: 1.5;
+      padding-top: 0.1rem;
+    }
+    .entry-date strong {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    .entry-route {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.15rem;
+    }
+    .entry-meta {
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+    .entry-notes {
+      font-size: 0.82rem;
+      color: var(--dim);
+      margin-top: 0.35rem;
+      font-style: italic;
+    }
+    .entry-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+      min-width: 70px;
+    }
+    .entry-dist {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--text);
+      line-height: 1;
+    }
+    .entry-dist span {
+      font-size: 0.75rem;
+      color: var(--dim);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    .btn-delete {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .btn-delete:hover { color: var(--red); }
+
+    /* EMPTY STATE */
+    .empty {
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header { padding: 80px 1.25rem 2rem; }
+      main { padding: 0 1.25rem 4rem; }
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3),
+      .stat:nth-child(4) { border-top: 1px solid var(--border); }
+      .stat:nth-child(4) { border-right: none; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid-3 { grid-template-columns: 1fr; }
+      .log-entry { grid-template-columns: 70px 1fr; }
+      .entry-right { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">DUCATI</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="maintenance.html">Maintenance</a></li>
+      <li><a href="rides.html" class="active">Ride Log</a></li>
+      <li><a href="exam.html">M Exam</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <p class="label">Records</p>
+      <h1 class="page-title">Ride Log</h1>
+      <p class="page-sub">Every kilometer. Every road.</p>
+    </div>
+  </div>
+
+  <main>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value" id="stat-total">0</div>
+        <div class="stat-label">Total Rides</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="stat-km">0</div>
+        <div class="stat-label">Total km</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="stat-longest">—</div>
+        <div class="stat-label">Longest Ride</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="stat-year">0</div>
+        <div class="stat-label">km This Year</div>
+      </div>
+    </div>
+
+    <p class="section-title">Log a Ride</p>
+    <div class="form-panel">
+      <form id="add-form" autocomplete="off">
+        <div class="form-grid">
+          <div>
+            <label for="f-date">Date</label>
+            <input type="date" id="f-date" required>
+          </div>
+          <div>
+            <label for="f-dist">Distance (km)</label>
+            <input type="number" id="f-dist" placeholder="e.g. 145" min="0" step="0.1" required>
+          </div>
+        </div>
+        <div class="form-grid-3">
+          <div>
+            <label for="f-from">From (optional)</label>
+            <input type="text" id="f-from" placeholder="e.g. Toronto">
+          </div>
+          <div>
+            <label for="f-to">To (optional)</label>
+            <input type="text" id="f-to" placeholder="e.g. Barrie">
+          </div>
+          <div>
+            <label for="f-duration">Duration (optional)</label>
+            <input type="text" id="f-duration" placeholder="e.g. 1h 45m">
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="f-notes">Notes (optional)</label>
+          <textarea id="f-notes" placeholder="Roads, conditions, highlights..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Log Ride</button>
+      </form>
+    </div>
+
+    <p class="section-title">Ride History</p>
+    <div id="log-list"></div>
+
+  </main>
+
+  <script>
+    const KEY = 'rideLog';
+
+    function load() {
+      return JSON.parse(localStorage.getItem(KEY) || '[]');
+    }
+
+    function save(data) {
+      localStorage.setItem(KEY, JSON.stringify(data));
+    }
+
+    function renderStats(data) {
+      const total = data.reduce((s, e) => s + (parseFloat(e.distance) || 0), 0);
+      const year  = new Date().getFullYear();
+      const ytd   = data
+        .filter(e => e.date && e.date.startsWith(year))
+        .reduce((s, e) => s + (parseFloat(e.distance) || 0), 0);
+      const longest = data.length
+        ? Math.max(...data.map(e => parseFloat(e.distance) || 0))
+        : 0;
+
+      document.getElementById('stat-total').textContent   = data.length;
+      document.getElementById('stat-km').textContent      = total > 0 ? total.toLocaleString('en-CA', { maximumFractionDigits: 0 }) : '0';
+      document.getElementById('stat-longest').textContent = longest > 0 ? longest.toLocaleString('en-CA', { maximumFractionDigits: 0 }) + ' km' : '—';
+      document.getElementById('stat-year').textContent    = ytd > 0 ? ytd.toLocaleString('en-CA', { maximumFractionDigits: 0 }) : '0';
+    }
+
+    function render() {
+      const data = load().sort((a, b) => b.date.localeCompare(a.date));
+      renderStats(data);
+
+      const el = document.getElementById('log-list');
+      if (!data.length) {
+        el.innerHTML = '<div class="empty">No rides yet — log your first one above.</div>';
+        return;
+      }
+
+      el.innerHTML = data.map(e => {
+        const d   = new Date(e.date + 'T00:00:00');
+        const day = d.getDate();
+        const mon = d.toLocaleDateString('en-CA', { month: 'short' }).toUpperCase();
+        const yr  = d.getFullYear();
+
+        let route = '';
+        if (e.from && e.to)   route = `${e.from} &rarr; ${e.to}`;
+        else if (e.to)         route = e.to;
+        else if (e.from)       route = `From ${e.from}`;
+        else                   route = 'Ride';
+
+        return `
+          <div class="log-entry">
+            <div class="entry-date"><strong>${day} ${mon}</strong>${yr}</div>
+            <div>
+              <div class="entry-route">${route}</div>
+              ${e.duration ? `<div class="entry-meta">${e.duration}</div>` : ''}
+              ${e.notes    ? `<div class="entry-notes">${e.notes}</div>` : ''}
+            </div>
+            <div class="entry-right">
+              <div class="entry-dist">${parseFloat(e.distance).toLocaleString('en-CA', { maximumFractionDigits: 0 })} <span>km</span></div>
+              <button class="btn-delete" onclick="del(${e.id})">Remove</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    window.del = function(id) {
+      save(load().filter(e => e.id !== id));
+      render();
+    };
+
+    document.getElementById('add-form').addEventListener('submit', function(ev) {
+      ev.preventDefault();
+      const data = load();
+      data.push({
+        id:       Date.now(),
+        date:     document.getElementById('f-date').value,
+        distance: document.getElementById('f-dist').value,
+        from:     document.getElementById('f-from').value.trim(),
+        to:       document.getElementById('f-to').value.trim(),
+        duration: document.getElementById('f-duration').value.trim(),
+        notes:    document.getElementById('f-notes').value.trim()
+      });
+      save(data);
+      this.reset();
+      document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+      render();
+    });
+
+    document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+    render();
+  </script>
+
+</body>
+</html>
