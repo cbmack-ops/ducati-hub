@@ -10,15 +10,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:       #CC0000;
-      --red-hover: #e60000;
-      --bg:        #0d0d0d;
-      --bg2:       #131313;
-      --bg3:       #1a1a1a;
-      --border:    #242424;
-      --text:      #f0f0f0;
-      --dim:       #888888;
-      --muted:     #444444;
+      --blue:   #1a3560;
+      --blue-h: #0f2240;
+      --bg:     #f0f0f0;
+      --bg2:    #e8e8e8;
+      --bg3:    #dcdcdc;
+      --border: #c4c4c4;
+      --text:   #111111;
+      --dim:    #555555;
+      --muted:  #9e9e9e;
     }
 
     html { scroll-behavior: smooth; }
@@ -28,31 +28,6 @@
       color: var(--text);
       font-family: 'Barlow', system-ui, sans-serif;
       line-height: 1.5;
-    }
-
-    /* Subtle grain noise overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.028;
-    }
-
-    /* Deep vignette gradient at page bottom */
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 40vh;
-      background: radial-gradient(ellipse 120% 80% at 50% 120%, rgba(204,0,0,0.04) 0%, transparent 70%),
-                  linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
-      pointer-events: none;
-      z-index: 1;
     }
 
     /* ── NAV ─────────────────────────────────────── */
@@ -65,7 +40,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 2.5rem;
-      background: rgba(13,13,13,0.96);
+      background: rgba(240,240,240,0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -73,7 +48,7 @@
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.75rem;
-      color: var(--red);
+      color: var(--blue);
       letter-spacing: 0.05em;
       text-decoration: none;
     }
@@ -96,7 +71,7 @@
     }
 
     .nav-links a:hover,
-    .nav-links a.active { color: var(--red); }
+    .nav-links a.active { color: var(--blue); }
 
     /* ── HERO ────────────────────────────────────── */
     #hero {
@@ -110,15 +85,14 @@
       overflow: hidden;
     }
 
-    /* Red slash accent */
+    /* Blue slash accent */
     #hero::after {
       content: '';
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 0; right: 0;
       width: 38%;
       height: 100%;
-      background: linear-gradient(135deg, transparent 42%, rgba(204,0,0,0.055) 42%);
+      background: linear-gradient(135deg, transparent 42%, rgba(26,53,96,0.06) 42%);
       pointer-events: none;
     }
 
@@ -129,21 +103,33 @@
       bottom: 4rem;
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(140px, 22vw, 280px);
-      color: rgba(255,255,255,0.025);
+      color: rgba(0,0,0,0.04);
       line-height: 1;
       user-select: none;
       pointer-events: none;
       letter-spacing: -0.02em;
     }
 
-    /* Thin vertical red bar */
+    /* Thin vertical blue bar */
     .hero-bar {
       position: absolute;
-      top: 12%;
-      left: 0;
+      top: 12%; left: 0;
       width: 3px;
       height: 55%;
-      background: linear-gradient(to bottom, var(--red), transparent);
+      background: linear-gradient(to bottom, var(--blue), transparent);
+    }
+
+    /* Bike image */
+    .hero-bike {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: 80%;
+      max-width: 52%;
+      object-fit: contain;
+      object-position: bottom right;
+      opacity: 0.92;
+      pointer-events: none;
     }
 
     .hero-content {
@@ -157,7 +143,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.22em;
-      color: var(--red);
+      color: var(--blue);
       margin-bottom: 1.2rem;
       animation: fadeUp 0.7s 0.1s both;
     }
@@ -182,7 +168,7 @@
     .hero-rule {
       width: 72px;
       height: 3px;
-      background: var(--red);
+      background: var(--blue);
       margin: 2rem 0;
       animation: fadeUp 0.7s 0.4s both;
     }
@@ -220,11 +206,11 @@
     }
 
     .btn-primary {
-      background: var(--red);
+      background: var(--blue);
       color: #fff;
     }
 
-    .btn-primary:hover { background: var(--red-hover); }
+    .btn-primary:hover { background: var(--blue-h); }
 
     .btn-outline {
       background: transparent;
@@ -233,8 +219,8 @@
     }
 
     .btn-outline:hover {
-      border-color: var(--red);
-      color: var(--red);
+      border-color: var(--blue);
+      color: var(--blue);
     }
 
     /* Scroll indicator */
@@ -293,7 +279,7 @@
     .stat-value {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2.8rem;
-      color: var(--red);
+      color: var(--blue);
       line-height: 1;
     }
 
@@ -321,7 +307,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.22em;
-      color: var(--red);
+      color: var(--blue);
       margin-bottom: 1rem;
     }
 
@@ -356,7 +342,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: var(--red);
+      background: var(--blue);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.3s ease;
@@ -368,7 +354,7 @@
     .card-num {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 3.5rem;
-      color: rgba(255,255,255,0.04);
+      color: rgba(0,0,0,0.06);
       line-height: 1;
       margin-bottom: 1.5rem;
       user-select: none;
@@ -380,7 +366,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      color: var(--red);
+      color: var(--blue);
       margin-bottom: 0.6rem;
     }
 
@@ -410,7 +396,7 @@
       transition: color 0.2s;
     }
 
-    .card:hover .card-link { color: var(--red); }
+    .card:hover .card-link { color: var(--blue); }
 
     /* ── FOOTER ──────────────────────────────────── */
     footer {
@@ -433,7 +419,7 @@
     .footer-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.4rem;
-      color: var(--red);
+      color: var(--blue);
       letter-spacing: 0.05em;
     }
 
@@ -455,6 +441,7 @@
       #hero { padding: 72px 1.25rem 4rem; }
       .hero-watermark { display: none; }
       .hero-bar { display: none; }
+      .hero-bike { display: none; }
       #sections { padding: 4rem 1.25rem; }
       #stats { padding: 2rem 1.25rem; }
       footer { padding: 1.75rem 1.25rem; }
@@ -467,6 +454,7 @@
     <a href="index.html" class="nav-logo">DUCATI</a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="bike.html">My Bike</a></li>
       <li><a href="maintenance.html">Maintenance</a></li>
       <li><a href="rides.html">Ride Log</a></li>
       <li><a href="exam.html">M Exam</a></li>
@@ -475,16 +463,24 @@
 
   <section id="hero">
     <div class="hero-bar"></div>
-    <div class="hero-watermark" id="heroYear">2024</div>
+    <div class="hero-watermark">2022</div>
+
+    <!-- Bike image — replace bike-hero.jpg with your own photo, or leave the URL below -->
+    <img
+      class="hero-bike"
+      src="https://ultimatemotorcycling.com/wp-content/uploads/2022/02/2022-ducati-xdiavel-nera-first-look-luxury-motorcycle-Poltrona-Frau-20.jpg"
+      alt="2022 Ducati XDiavel S"
+      onerror="this.style.display='none'"
+    />
 
     <div class="hero-content">
       <p class="hero-eyebrow">Ontario, Canada &mdash; My Garage</p>
       <h1 class="hero-title">DUCATI</h1>
-      <p class="hero-model" id="bikeModel">Duval</p>
+      <p class="hero-model">2022 XDiavel S</p>
       <div class="hero-rule"></div>
       <p class="hero-tagline">One bike. Every service record. Every ride. Track your machine and ace your M license &mdash; all in one place.</p>
       <div class="hero-cta">
-        <a href="#sections" class="btn btn-primary">Explore Sections</a>
+        <a href="bike.html" class="btn btn-primary">View My Bike</a>
         <a href="exam.html" class="btn btn-outline">Start M Exam Prep</a>
       </div>
     </div>
@@ -521,27 +517,35 @@
     <h2 class="section-title">Everything In One Place</h2>
     <div class="cards">
 
-      <a href="maintenance.html" class="card">
+      <a href="bike.html" class="card">
         <div class="card-num">01</div>
+        <div class="card-tag">The Machine</div>
+        <h3 class="card-title">My Bike</h3>
+        <p class="card-desc">2022 Ducati XDiavel S — glossy black. Full specs, ownership history, and everything about the machine.</p>
+        <span class="card-link">View Profile &rarr;</span>
+      </a>
+
+      <a href="maintenance.html" class="card">
+        <div class="card-num">02</div>
         <div class="card-tag">Service Records</div>
         <h3 class="card-title">Maintenance Log</h3>
-        <p class="card-desc">Track oil changes, valve adjustments, tire swaps, and every service interval. Never lose a receipt or forget a spec again.</p>
-        <span class="card-link">Coming Soon &rarr;</span>
+        <p class="card-desc">Track oil changes, valve adjustments, tire swaps, and every service interval. Never lose a receipt again.</p>
+        <span class="card-link">View Log &rarr;</span>
       </a>
 
       <a href="rides.html" class="card">
-        <div class="card-num">02</div>
-        <div class="card-tag">GPS &amp; Routes</div>
+        <div class="card-num">03</div>
+        <div class="card-tag">Routes &amp; Distances</div>
         <h3 class="card-title">Ride Log</h3>
-        <p class="card-desc">Log routes, distances, and notes. Build a permanent record of every kilometre you've put down &mdash; from the commute to the canyon run.</p>
-        <span class="card-link">Coming Soon &rarr;</span>
+        <p class="card-desc">Log routes, distances, and notes. Build a permanent record of every kilometre from the commute to the canyon run.</p>
+        <span class="card-link">View Rides &rarr;</span>
       </a>
 
       <a href="exam.html" class="card">
-        <div class="card-num">03</div>
+        <div class="card-num">04</div>
         <div class="card-tag">Ontario M License</div>
         <h3 class="card-title">M Exam Prep</h3>
-        <p class="card-desc">Practice Ontario MTO handbook questions on road signs, rules of the road, and safe riding. Track scores and close the gap on your weaknesses.</p>
+        <p class="card-desc">Practice MTO handbook questions on road signs, rules, and safe riding. Track your scores and close the gap.</p>
         <span class="card-link">Start Studying &rarr;</span>
       </a>
 
@@ -556,8 +560,20 @@
   </footer>
 
   <script>
-    // Pull best exam score from localStorage
     (function () {
+      // Rides
+      const rides = JSON.parse(localStorage.getItem('rideLog') || '[]');
+      const totalKm = rides.reduce((s, r) => s + (parseFloat(r.distance) || 0), 0);
+      document.getElementById('statKm').textContent = totalKm > 0
+        ? totalKm.toLocaleString('en-CA', { maximumFractionDigits: 0 })
+        : '0';
+      document.getElementById('statRides').textContent = rides.length;
+
+      // Services
+      const services = JSON.parse(localStorage.getItem('maintenanceLog') || '[]');
+      document.getElementById('statServices').textContent = services.length;
+
+      // Best exam score
       const history = JSON.parse(localStorage.getItem('examHistory') || '[]');
       if (history.length > 0) {
         const best = Math.max(...history.map(h => Math.round((h.score / h.total) * 100)));

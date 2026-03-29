@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bike — Ducati Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #1a3560;
+      --blue-h: #0f2240;
+      --bg:     #f0f0f0;
+      --bg2:    #e8e8e8;
+      --bg3:    #dcdcdc;
+      --border: #c4c4c4;
+      --text:   #111111;
+      --dim:    #555555;
+      --muted:  #9e9e9e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', system-ui, sans-serif;
+      line-height: 1.5;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(240,240,240,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: var(--blue);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.25rem;
+    }
+
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--blue); }
+
+    /* ── HERO ────────────────────────────────────── */
+    .page-hero {
+      position: relative;
+      padding: 100px 2.5rem 4rem;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 40%, rgba(26,53,96,0.05) 40%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-sub {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(22px, 4vw, 44px);
+      letter-spacing: 0.06em;
+      color: var(--dim);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-rule {
+      width: 60px;
+      height: 3px;
+      background: var(--blue);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+
+    .meta-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .meta-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    /* Hero image */
+    .hero-img-wrap {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .hero-img {
+      width: 100%;
+      max-height: 340px;
+      object-fit: contain;
+      object-position: bottom;
+      display: block;
+    }
+
+    .hero-img-placeholder {
+      width: 100%;
+      height: 300px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--muted);
+    }
+
+    .hero-img-placeholder span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* ── MAIN LAYOUT ─────────────────────────────── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ── SECTION ─────────────────────────────────── */
+    .section { margin-bottom: 3rem; }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 1.4rem;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    /* ── PHOTOS ──────────────────────────────────── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      display: block;
+      background: var(--bg3);
+    }
+
+    .photo-grid img:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 16/7;
+    }
+
+    /* ── SPECS TABLE ─────────────────────────────── */
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .specs-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .specs-table tr:last-child { border-bottom: none; }
+
+    .specs-table td {
+      padding: 0.75rem 0;
+      font-size: 0.9rem;
+    }
+
+    .specs-table td:first-child {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      width: 45%;
+    }
+
+    .specs-table td:last-child {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ── HISTORY ─────────────────────────────────── */
+    .timeline { position: relative; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 10px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      position: relative;
+    }
+
+    .timeline-dot {
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-dot.muted {
+      background: var(--bg3);
+      border: 2px solid var(--border);
+    }
+
+    .timeline-date {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-event {
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-note {
+      font-size: 0.85rem;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+
+    /* ── SIDEBAR ─────────────────────────────────── */
+    .sidebar {}
+
+    .sidebar-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quick-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .quick-stat:last-child { border-bottom: none; }
+
+    .quick-stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .quick-stat-val {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .quick-stat-val.blue { color: var(--blue); }
+
+    .btn {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-primary:hover { background: var(--blue-h); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ── NOTES SECTION ───────────────────────────── */
+    .notes-area {
+      width: 100%;
+      min-height: 140px;
+      padding: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+
+    .notes-area:focus {
+      outline: none;
+      border-color: var(--blue);
+    }
+
+    .notes-save {
+      margin-top: 0.6rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.6rem 1.5rem;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .notes-save:hover { background: var(--blue-h); }
+
+    .notes-saved {
+      display: none;
+      margin-top: 0.4rem;
+      font-size: 0.75rem;
+      color: #22c55e;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.75rem 2.5rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--blue);
+    }
+
+    .footer-copy { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-img-wrap { order: -1; }
+      main { grid-template-columns: 1fr; }
+      .sidebar { order: -1; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-hero { padding: 80px 1.25rem 3rem; }
+      main { padding: 3rem 1.25rem 5rem; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .photo-grid img:first-child { grid-column: auto; aspect-ratio: 16/10; }
+      footer { padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">DUCATI</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="bike.html" class="active">My Bike</a></li>
+      <li><a href="maintenance.html">Maintenance</a></li>
+      <li><a href="rides.html">Ride Log</a></li>
+      <li><a href="exam.html">M Exam</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <div class="page-hero">
+    <div class="hero-inner">
+      <div>
+        <p class="label">My Machine</p>
+        <h1 class="hero-title">DUCATI</h1>
+        <p class="hero-sub">2022 XDiavel S</p>
+        <div class="hero-rule"></div>
+        <div class="hero-meta">
+          <div class="meta-item">
+            <span class="meta-val">2022</span>
+            <span class="meta-label">Model Year</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">1262cc</span>
+            <span class="meta-label">Engine</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">152hp</span>
+            <span class="meta-label">Power</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-val">Black</span>
+            <span class="meta-label">Colour</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-img-wrap">
+        <img
+          class="hero-img"
+          src="https://ultimatemotorcycling.com/wp-content/uploads/2022/02/2022-ducati-xdiavel-nera-first-look-luxury-motorcycle-Poltrona-Frau-20.jpg"
+          alt="2022 Ducati XDiavel S"
+          onerror="this.style.display='none'; document.querySelector('.hero-img-placeholder').style.display='flex';"
+        />
+        <div class="hero-img-placeholder" style="display:none">
+          <span>Add a photo of your bike</span>
+          <span style="font-size:0.65rem; opacity:0.6">Replace the image URL in bike.html</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN ───────────────────────────────────────────────── -->
+  <main>
+
+    <div>
+
+      <!-- PHOTOS -->
+      <div class="section">
+        <h2 class="section-title">Photos</h2>
+        <div class="photo-grid">
+          <img
+            src="https://ultimatemotorcycling.com/wp-content/uploads/2022/02/2022-ducati-xdiavel-nera-first-look-luxury-motorcycle-Poltrona-Frau-38.jpg"
+            alt="Ducati XDiavel S side profile"
+            onerror="this.style.background='var(--bg3)'; this.alt=''; this.style.minHeight='200px';"
+          />
+          <img
+            src="https://ultimatemotorcycling.com/wp-content/uploads/2022/02/2022-ducati-xdiavel-nera-first-look-luxury-motorcycle-Poltrona-Frau-45.jpg"
+            alt="Ducati XDiavel S front"
+            onerror="this.style.background='var(--bg3)'; this.alt=''; this.style.minHeight='160px';"
+          />
+          <img
+            src="https://cloudfront-us-east-1.images.arcpublishing.com/octane/SN46RRUF35EHXK3V4BM54CV7Z4.jpg"
+            alt="Ducati XDiavel S detail"
+            onerror="this.style.background='var(--bg3)'; this.alt=''; this.style.minHeight='160px';"
+          />
+        </div>
+        <p style="font-size:0.72rem; color:var(--muted); margin-top:0.75rem;">
+          To add your own photos: save images to the repo folder and update the <code>src</code> values above.
+        </p>
+      </div>
+
+      <!-- SPECS -->
+      <div class="section">
+        <h2 class="section-title">Full Specifications</h2>
+        <table class="specs-table">
+          <tbody>
+            <tr><td>Engine</td><td>1262cc Testastretta DVT, L-twin, liquid-cooled</td></tr>
+            <tr><td>Bore &times; Stroke</td><td>106 mm &times; 71.5 mm</td></tr>
+            <tr><td>Compression</td><td>13.0:1</td></tr>
+            <tr><td>Max Power</td><td>152 hp (113 kW) @ 9,500 rpm</td></tr>
+            <tr><td>Max Torque</td><td>129 Nm (95 lb-ft) @ 5,000 rpm</td></tr>
+            <tr><td>Transmission</td><td>6-speed with Ducati Quick Shift EVO (up &amp; down)</td></tr>
+            <tr><td>Final Drive</td><td>Belt drive</td></tr>
+            <tr><td>Frame</td><td>Steel tubular trellis</td></tr>
+            <tr><td>Front Suspension</td><td>48mm Marzocchi fully adjustable fork, 130mm travel</td></tr>
+            <tr><td>Rear Suspension</td><td>Sachs monoshock, fully adjustable, 130mm travel</td></tr>
+            <tr><td>Front Brake</td><td>Dual 330mm Brembo Monobloc, radial 4-piston</td></tr>
+            <tr><td>Rear Brake</td><td>Single 265mm, 2-piston caliper</td></tr>
+            <tr><td>Front Tyre</td><td>120/70 ZR17</td></tr>
+            <tr><td>Rear Tyre</td><td>240/45 ZR17</td></tr>
+            <tr><td>Wheelbase</td><td>1,601 mm</td></tr>
+            <tr><td>Seat Height</td><td>770 mm</td></tr>
+            <tr><td>Dry Weight</td><td>220 kg (485 lb)</td></tr>
+            <tr><td>Fuel Capacity</td><td>17 litres</td></tr>
+            <tr><td>Colour</td><td>Black on Black (Glossy)</td></tr>
+            <tr><td>Riding Modes</td><td>Sport, Touring, Urban, Wet</td></tr>
+            <tr><td>Electronics</td><td>DTC (traction control), ABS Cornering, DWC (wheelie control), EBC, DRL, Cruise Control</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- OWNERSHIP HISTORY -->
+      <div class="section">
+        <h2 class="section-title">Ownership History</h2>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <p class="timeline-date">2022</p>
+              <p class="timeline-event">Purchased — 2022 Ducati XDiavel S</p>
+              <p class="timeline-note">Acquired new from dealer. Glossy black colorway. First Ducati.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot muted"></div>
+            <div>
+              <p class="timeline-date">Add your own</p>
+              <p class="timeline-event">Modifications, events, milestones</p>
+              <p class="timeline-note">Edit bike.html to add your own history entries to this timeline.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div class="section">
+        <h2 class="section-title">My Notes</h2>
+        <textarea
+          class="notes-area"
+          id="bike-notes"
+          placeholder="Anything you want to remember about this bike — mods planned, quirks, to-dos..."
+        ></textarea>
+        <br>
+        <button class="notes-save" onclick="saveNotes()">Save Notes</button>
+        <p class="notes-saved" id="notes-saved">Saved.</p>
+      </div>
+
+    </div>
+
+    <!-- ── SIDEBAR ──────────────────────────────── -->
+    <aside class="sidebar">
+
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">Quick Stats</h3>
+        <div class="quick-stat">
+          <span class="quick-stat-label">Total km</span>
+          <span class="quick-stat-val blue" id="sb-km">0</span>
+        </div>
+        <div class="quick-stat">
+          <span class="quick-stat-label">Rides Logged</span>
+          <span class="quick-stat-val" id="sb-rides">0</span>
+        </div>
+        <div class="quick-stat">
+          <span class="quick-stat-label">Services Done</span>
+          <span class="quick-stat-val" id="sb-services">0</span>
+        </div>
+        <div class="quick-stat">
+          <span class="quick-stat-label">Best Exam Score</span>
+          <span class="quick-stat-val" id="sb-score">&mdash;</span>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">Quick Links</h3>
+        <a href="maintenance.html" class="btn btn-primary">Maintenance Log</a>
+        <a href="rides.html" class="btn btn-outline">Ride Log</a>
+        <a href="exam.html" class="btn btn-outline">M Exam Prep</a>
+      </div>
+
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">Dealer Info</h3>
+        <div class="quick-stat">
+          <span class="quick-stat-label">Dealer</span>
+          <span class="quick-stat-val" style="font-size:0.85rem">—</span>
+        </div>
+        <div class="quick-stat">
+          <span class="quick-stat-label">VIN</span>
+          <span class="quick-stat-val" style="font-size:0.85rem">—</span>
+        </div>
+        <div class="quick-stat">
+          <span class="quick-stat-label">Insurance</span>
+          <span class="quick-stat-val" style="font-size:0.85rem">—</span>
+        </div>
+        <div class="quick-stat">
+          <span class="quick-stat-label">Plate</span>
+          <span class="quick-stat-val" style="font-size:0.85rem">—</span>
+        </div>
+        <p style="font-size:0.7rem; color:var(--muted); margin-top:1rem; line-height:1.5;">
+          Edit bike.html to fill in your dealer, VIN, insurance, and plate details.
+        </p>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">DUCATI HUB</div>
+      <p class="footer-copy">Personal ownership tracker. Not affiliated with Ducati Motor Holding.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Load stats from localStorage
+    (function () {
+      const rides    = JSON.parse(localStorage.getItem('rideLog') || '[]');
+      const services = JSON.parse(localStorage.getItem('maintenanceLog') || '[]');
+      const history  = JSON.parse(localStorage.getItem('examHistory') || '[]');
+
+      const totalKm = rides.reduce((s, r) => s + (parseFloat(r.distance) || 0), 0);
+      document.getElementById('sb-km').textContent = totalKm > 0
+        ? totalKm.toLocaleString('en-CA', { maximumFractionDigits: 0 })
+        : '0';
+      document.getElementById('sb-rides').textContent    = rides.length;
+      document.getElementById('sb-services').textContent = services.length;
+
+      if (history.length > 0) {
+        const best = Math.max(...history.map(h => Math.round((h.score / h.total) * 100)));
+        document.getElementById('sb-score').textContent = best + '%';
+      }
+    })();
+
+    // Notes — saved to localStorage
+    const notesEl = document.getElementById('bike-notes');
+    notesEl.value = localStorage.getItem('bikeNotes') || '';
+
+    function saveNotes() {
+      localStorage.setItem('bikeNotes', notesEl.value);
+      const msg = document.getElementById('notes-saved');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 2000);
+    }
+
+    // Auto-save notes on blur
+    notesEl.addEventListener('blur', saveNotes);
+  </script>
+
+</body>
+</html>

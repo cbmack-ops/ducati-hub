@@ -10,19 +10,19 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:      #CC0000;
-      --red-h:    #e60000;
+      --blue:     #1a3560;
+      --blue-h:   #0f2240;
       --green:    #22c55e;
-      --green-bg: rgba(34,197,94,0.08);
-      --wrong:    #ef4444;
-      --wrong-bg: rgba(239,68,68,0.08);
-      --bg:       #0d0d0d;
-      --bg2:      #131313;
-      --bg3:      #1a1a1a;
-      --border:   #242424;
-      --text:     #f0f0f0;
-      --dim:      #888888;
-      --muted:    #444444;
+      --green-bg: rgba(34,197,94,0.1);
+      --wrong:    #c0392b;
+      --wrong-bg: rgba(192,57,43,0.08);
+      --bg:       #f0f0f0;
+      --bg2:      #e8e8e8;
+      --bg3:      #dcdcdc;
+      --border:   #c4c4c4;
+      --text:     #111111;
+      --dim:      #555555;
+      --muted:    #9e9e9e;
     }
 
     html { scroll-behavior: smooth; }
@@ -53,7 +53,7 @@
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.75rem;
-      color: var(--red);
+      color: var(--blue);
       letter-spacing: 0.05em;
       text-decoration: none;
     }
@@ -76,7 +76,7 @@
     }
 
     .nav-links a:hover,
-    .nav-links a.active { color: var(--red); }
+    .nav-links a.active { color: var(--blue); }
 
     /* ── PAGE HEADER ─────────────────────────────── */
     .page-header {
@@ -91,7 +91,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.22em;
-      color: var(--red);
+      color: var(--blue);
       margin-bottom: 0.75rem;
     }
 
@@ -133,7 +133,7 @@
     }
 
     .mode-btn:hover { color: var(--text); border-color: var(--muted); }
-    .mode-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+    .mode-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
 
     /* ── MAIN CONTENT ────────────────────────────── */
     main {
@@ -171,7 +171,7 @@
     .progress-fill {
       position: absolute;
       inset: 0 auto 0 0;
-      background: var(--red);
+      background: var(--blue);
       transition: width 0.4s ease;
     }
 
@@ -409,7 +409,7 @@
     .study-num {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.1rem;
-      color: var(--red);
+      color: var(--blue);
       min-width: 2rem;
       line-height: 1.3;
     }
@@ -549,8 +549,8 @@
       transition: all 0.2s;
     }
 
-    .btn-primary { background: var(--red); color: #fff; }
-    .btn-primary:hover { background: var(--red-h); }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-primary:hover { background: var(--blue-h); }
 
     .btn-outline {
       background: transparent;
@@ -558,7 +558,7 @@
       border: 1px solid var(--border);
     }
 
-    .btn-outline:hover { border-color: var(--red); color: var(--red); }
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
 
     /* ── RESPONSIVE ──────────────────────────────── */
     @media (max-width: 640px) {
@@ -579,6 +579,7 @@
     <a href="index.html" class="nav-logo">DUCATI</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
+      <li><a href="bike.html">My Bike</a></li>
       <li><a href="maintenance.html">Maintenance</a></li>
       <li><a href="rides.html">Ride Log</a></li>
       <li><a href="exam.html" class="active">M Exam</a></li>
@@ -811,6 +812,195 @@
       opts: ["1 second — the same as in good conditions", "2 seconds — the standard minimum", "3 to 4 seconds or more — significantly greater than in good conditions", "Reduced visibility has no effect on required following distance"],
       ans: 2,
       exp: "Wet pavement increases stopping distance and poor visibility reduces the time you have to react. Ontario MTO recommends extending following distance to three seconds or more in adverse conditions."
+    }
+  ];
+
+    // ── ADDITIONAL QUESTIONS (26 – 55) ──────────────────────────────────────
+    {
+      q: "What is the correct hand signal for a left turn on a motorcycle?",
+      opts: ["Right arm extended pointing left", "Left arm extended straight out horizontally", "Left arm bent upward at 90 degrees", "Both arms outstretched"],
+      ans: 1,
+      exp: "Extending the left arm straight out horizontally signals a left turn. Right arm extended straight out, or left arm bent upward at 90 degrees, signals a right turn."
+    },
+    {
+      q: "What does a flashing amber (yellow) traffic light mean?",
+      opts: ["Stop — red is about to follow", "Treat as a stop sign", "Slow down and proceed with caution", "Yield to pedestrians only"],
+      ans: 2,
+      exp: "A flashing amber light means slow down and proceed with caution. It differs from a flashing red, which requires a full stop before proceeding."
+    },
+    {
+      q: "Is lane filtering (moving between slow or stopped traffic) legal in Ontario?",
+      opts: ["Yes, when traffic is completely stopped", "Yes, on multi-lane highways only", "No — it is illegal in Ontario", "Yes, during off-peak hours"],
+      ans: 2,
+      exp: "Lane filtering and lane splitting are both illegal in Ontario. Motorcycles must occupy a full lane and follow the same traffic rules as other vehicles."
+    },
+    {
+      q: "What does ABS (Anti-lock Braking System) do on a motorcycle?",
+      opts: ["Automatically applies brakes in an emergency", "Prevents wheel lock-up by modulating brake pressure, allowing you to steer while stopping", "Reduces brake fade on long downhills", "Increases brake force on wet pavement"],
+      ans: 1,
+      exp: "ABS prevents wheel lock-up by rapidly modulating brake pressure. This allows the rider to maintain steering control during hard braking — especially useful on slippery surfaces."
+    },
+    {
+      q: "When loading a motorcycle with luggage, where should the weight be placed?",
+      opts: ["As high as possible to lower the centre of gravity", "Low and centred, balanced evenly side to side", "All on one side for easy access", "Entirely at the rear to protect the front suspension"],
+      ans: 1,
+      exp: "Keeping weight low and centred minimises changes to the bike's handling. High or uneven loads raise the centre of gravity and make the bike harder to control."
+    },
+    {
+      q: "What is 'target fixation' in motorcycle riding?",
+      opts: ["A training drill for improving focus", "The tendency to steer toward whatever your eyes are focused on, including hazards", "Keeping your eyes fixed on the horizon", "A GPS navigation technique"],
+      ans: 1,
+      exp: "Target fixation causes riders to steer toward the hazard they are trying to avoid. The remedy is to look where you want to go, not at the obstacle."
+    },
+    {
+      q: "If your throttle sticks open, you should:",
+      opts: ["Apply maximum braking immediately", "Try to roll the throttle forward, pull in the clutch, apply the brakes, and steer to safety", "Turn off the ignition while at full speed", "Jump off the motorcycle"],
+      ans: 1,
+      exp: "First try to free the stuck throttle by rolling it forward. If that fails, pulling the clutch disengages the engine. Then apply brakes and steer to a safe stop. Only cut the ignition as a last resort — it removes power steering assist and can lock the steering column on some bikes."
+    },
+    {
+      q: "On wet roads, which surfaces are especially slippery for motorcycles?",
+      opts: ["Fresh asphalt — it provides extra grip", "The left-third of the lane where tires track", "Painted lines, tar strips, and metal utility covers", "Rough pavement textures"],
+      ans: 2,
+      exp: "Paint, thermoplastic markings, tar filler strips, and metal covers (manholes, grates) become very slippery when wet. Cross them as straight as possible at reduced speed."
+    },
+    {
+      q: "How frequently should you glance at your mirrors while riding?",
+      opts: ["Only when changing lanes", "Every 5 to 8 seconds to maintain a mental picture of what is behind you", "Only at red lights", "When you hear a loud vehicle approaching"],
+      ans: 1,
+      exp: "Regularly scanning your mirrors every 5–8 seconds helps you build and maintain an accurate picture of traffic around you, allowing earlier and better responses to hazards."
+    },
+    {
+      q: "What does a protected green arrow signal at an intersection mean?",
+      opts: ["Yield to pedestrians, then turn", "You may proceed in the arrow direction — conflicting traffic is stopped", "Advance only if the way is clear", "Green arrow means the same as a green circle"],
+      ans: 1,
+      exp: "A protected green arrow means your movement is protected: opposing traffic has been stopped by a red signal, so you may proceed in the indicated direction without yielding to opposing traffic."
+    },
+    {
+      q: "In Ontario, must motorcycle headlights be on while the engine is running?",
+      opts: ["No — the rider chooses when to turn them on", "Yes — motorcycles must have Daytime Running Lights (DRL) on whenever the engine is running", "Only between sunset and sunrise", "Only on highways"],
+      ans: 1,
+      exp: "Under Ontario law, motorcycles must have their headlights illuminated whenever the engine is running. Many modern motorcycles do this automatically through a DRL circuit."
+    },
+    {
+      q: "What is 'road hypnosis' (highway hypnosis)?",
+      opts: ["A medical condition requiring a doctor's note to ride", "A trance-like drowsy state caused by monotonous riding that reduces alertness", "The dazzle from oncoming high beams at night", "Heat shimmer hallucinations on hot pavement"],
+      ans: 1,
+      exp: "Monotonous highways can induce a hypnotic state where a rider continues riding with reduced conscious awareness. Combat it by taking breaks, changing riding position, and staying mentally engaged."
+    },
+    {
+      q: "When should you use your motorcycle's high-beam headlight?",
+      opts: ["At all times for maximum visibility", "On unlit roads at night when no oncoming or preceding traffic is present", "During daylight only", "Motorcycles do not have high beams"],
+      ans: 1,
+      exp: "Switch to high beam on dark roads when no oncoming traffic or vehicles ahead could be blinded. Dim to low beam when another vehicle is within roughly 150 metres in either direction."
+    },
+    {
+      q: "When slowing to a stop, the correct gear procedure is:",
+      opts: ["Stay in top gear until stopped", "Shift to neutral before stopping", "Downshift progressively through the gears and stop in first gear", "Shift directly from top gear to first just before the stop line"],
+      ans: 2,
+      exp: "Downshifting progressively as you slow uses engine braking to help decelerate and keeps the bike ready to move if needed. Stopping in first gear means you are prepared to go without hunting for a gear."
+    },
+    {
+      q: "At an uncontrolled intersection in Ontario (no signs or signals), who must yield?",
+      opts: ["The vehicle that arrived last", "The vehicle traveling on a gravel road", "The vehicle on the left — yield to traffic on your right", "The vehicle going straight — turning traffic has priority"],
+      ans: 2,
+      exp: "Ontario's Highway Traffic Act requires that at an uncontrolled intersection you yield to any vehicle approaching from your right. Both vehicles arriving simultaneously: the one on the left yields."
+    },
+    {
+      q: "If your motorcycle begins to wobble at highway speed, you should:",
+      opts: ["Brake hard to stop as fast as possible", "Grip the handlebars firmly, gradually ease off the throttle, avoid sudden braking, and steer to safety", "Swerve sharply to correct the wobble", "Accelerate through it to stabilise the wheels"],
+      ans: 1,
+      exp: "A wobble is usually caused by tyre imbalance, worn tyres, or loose components. Gripping firmly and rolling off the throttle gradually damps the oscillation. Sudden braking or steering inputs can worsen it."
+    },
+    {
+      q: "Hydroplaning on a motorcycle occurs when:",
+      opts: ["You ride over dry, cracked pavement at high speed", "A film of water prevents the tyre from contacting the road surface, causing loss of grip", "The rear tyre locks up under braking", "You ride on cold tyres before they warm up"],
+      ans: 1,
+      exp: "Hydroplaning happens when tyre tread cannot channel water away fast enough, causing the tyre to ride on a film of water. Reduce speed in heavy rain and avoid puddles where depth is unknown."
+    },
+    {
+      q: "A T-intersection warning sign in Ontario means:",
+      opts: ["A railway crossing is ahead", "The road you are on ends — you must turn left or right", "Traffic merges from the right", "A Y-shaped fork is ahead"],
+      ans: 1,
+      exp: "A T-intersection sign (a T shape) warns that the road you are on comes to a dead end. You must stop and turn left or right to continue."
+    },
+    {
+      q: "What is the main purpose of wearing bright or reflective gear as a motorcyclist?",
+      opts: ["It is required by Ontario law", "It increases your conspicuity — how easily other road users can see you", "It protects against road rash in a crash", "It keeps you cool in summer"],
+      ans: 1,
+      exp: "Being seen is one of a motorcyclist's greatest challenges. High-visibility or reflective clothing significantly increases conspicuity, especially in low-light conditions or at intersections."
+    },
+    {
+      q: "Which of these is NOT a recommended strategy for being seen by other drivers?",
+      opts: ["Wearing bright or reflective clothing", "Positioning yourself in the lane where you are most visible", "Riding close behind a large truck to take advantage of its headlights", "Using your headlight during daylight hours"],
+      ans: 2,
+      exp: "Tailgating a large vehicle places you in its blind spot and drastically reduces your view of the road ahead. It is one of the most dangerous positions for a motorcyclist."
+    },
+    {
+      q: "What effect does carrying a passenger have on your motorcycle?",
+      opts: ["No effect if the passenger sits still", "It increases stopping distance and affects handling — you may need to adjust tyre pressure and suspension preload", "It improves stability due to added weight", "It reduces fuel consumption"],
+      ans: 1,
+      exp: "A passenger adds significant weight, increasing braking distances and changing the bike's balance. Some bikes require adjusting tyre pressures and rear-suspension preload for two-up riding."
+    },
+    {
+      q: "In Ontario, what minimum eye protection is required if your motorcycle has no windshield?",
+      opts: ["Regular sunglasses are sufficient", "No protection is legally required", "Approved goggles or a helmet face shield", "A full-face helmet only"],
+      ans: 2,
+      exp: "Ontario law requires approved goggles or a face shield if your motorcycle is not fitted with a windshield. Regular sunglasses are not an approved substitute because they do not seal against the wind and debris."
+    },
+    {
+      q: "What does a solid white line separating traffic lanes on your side of the road mean?",
+      opts: ["Lane merges ahead", "Passing is discouraged but not prohibited", "Do not change lanes — the boundary must not be crossed", "Bicycle lane boundary only"],
+      ans: 2,
+      exp: "A solid white lane line means you should not cross it. You must stay in your lane. This is commonly seen in construction zones, near intersections, or approaching a toll plaza."
+    },
+    {
+      q: "What is the recommended technique for making a slow-speed U-turn?",
+      opts: ["Full throttle to complete it quickly", "Slow speed, turn your head fully through the arc, use the clutch friction zone, and lightly drag the rear brake", "Come to a complete stop, then accelerate sharply", "Keep the bike perfectly upright throughout"],
+      ans: 1,
+      exp: "At slow speeds, balance comes from momentum and gyroscopic effect. Keeping your head turned through the arc, using a slipping clutch for control, and dragging the rear brake prevents stalling and tipping."
+    },
+    {
+      q: "When overtaking another vehicle, the correct procedure is to:",
+      opts: ["Move into the oncoming lane and floor it as fast as possible", "Signal, check your blind spot, accelerate smoothly past, then return to your lane only when the passed vehicle is visible in your mirror", "Flash high beams repeatedly to announce your overtake", "Sound the horn continuously while passing"],
+      ans: 1,
+      exp: "A proper pass: signal, shoulder-check, move out, accelerate past, confirm the vehicle is in your mirror before returning to lane, signal, return. Never cut back too close in front."
+    },
+    {
+      q: "A speed limit sign (black number on white background) indicates:",
+      opts: ["A suggested speed for ideal conditions", "The maximum legal speed under ideal conditions", "A minimum speed that must be maintained", "A school zone speed that applies all day"],
+      ans: 1,
+      exp: "Posted speed limits are the maximum legal speed under ideal conditions. Riders must reduce speed whenever conditions (weather, traffic, visibility) make the posted limit unsafe."
+    },
+    {
+      q: "What should you do if you experience brake fade (brakes losing effectiveness during a long descent)?",
+      opts: ["Pump the brakes as fast as possible", "Apply maximum force to both brakes", "Ease off the brakes, downshift to use engine braking, and allow the brakes to cool", "Pull over and call for assistance immediately"],
+      ans: 2,
+      exp: "Brake fade is caused by heat build-up. Using engine braking through lower gears reduces heat on the brake pads and discs. Once cooled, brakes regain their effectiveness."
+    },
+    {
+      q: "Riding over a metal grate bridge deck, you should:",
+      opts: ["Accelerate to reduce contact time with the grate", "Reduce speed, hold the handlebars firmly, and ride in a straight line", "Swerve to find a smoother surface", "Cross at a 45-degree angle to reduce vibration"],
+      ans: 1,
+      exp: "Metal grates can cause the front wheel to track in the grooves and wobble. Reduce speed before the grate, grip firmly, stay upright, and ride straight across."
+    },
+    {
+      q: "If your rear wheel skids under braking, you should:",
+      opts: ["Release the rear brake instantly to snap the wheel back", "Maintain steady rear brake pressure and keep the bike straight — gradually ease off the brake", "Apply maximum front brake to compensate", "Steer into the skid like a car"],
+      ans: 1,
+      exp: "Releasing a locked rear brake suddenly can cause a 'highside' — a violent flip. Keep the bike straight and gradually reduce rear brake pressure to let the wheel spin up again smoothly."
+    },
+    {
+      q: "What protective equipment does Ontario law require motorcycle riders to wear?",
+      opts: ["Helmet, gloves, and jacket", "A CSA or Snell-approved helmet only", "An approved motorcycle helmet plus eye protection if no windshield is fitted", "Full leathers and an approved helmet"],
+      ans: 2,
+      exp: "Ontario law requires an approved motorcycle helmet at all times. If the motorcycle has no windshield, approved eye protection (goggles or face shield) is also mandatory. Full protective gear is strongly recommended but not legally required beyond these two items."
+    },
+    {
+      q: "When should you replace a motorcycle helmet?",
+      opts: ["Only when it shows visible cracks", "Every 10 years regardless of condition", "After any impact — even if it looks undamaged — and at least every 5 years from the manufacture date", "Only when the interior foam feels compressed"],
+      ans: 2,
+      exp: "Helmet foam compresses permanently on impact to absorb energy. The damage is often invisible. Replace after any crash impact. Most manufacturers and safety organisations recommend replacement every 5 years even with no impact, as materials degrade over time."
     }
   ];
 

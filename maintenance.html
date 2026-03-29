@@ -10,15 +10,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:    #CC0000;
-      --red-h:  #e60000;
-      --bg:     #0d0d0d;
-      --bg2:    #131313;
-      --bg3:    #1a1a1a;
-      --border: #242424;
-      --text:   #f0f0f0;
-      --dim:    #888888;
-      --muted:  #444444;
+      --blue:   #1a3560;
+      --blue-h: #0f2240;
+      --bg:     #f0f0f0;
+      --bg2:    #e8e8e8;
+      --bg3:    #dcdcdc;
+      --border: #c4c4c4;
+      --text:   #111111;
+      --dim:    #555555;
+      --muted:  #9e9e9e;
     }
 
     body {
@@ -39,14 +39,14 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 2.5rem;
-      background: rgba(13,13,13,0.96);
+      background: rgba(240,240,240,0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.75rem;
-      color: var(--red);
+      color: var(--blue);
       letter-spacing: 0.05em;
       text-decoration: none;
     }
@@ -61,7 +61,7 @@
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--red); }
+    .nav-links a:hover, .nav-links a.active { color: var(--blue); }
 
     /* PAGE HEADER */
     .page-header {
@@ -75,7 +75,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      color: var(--red);
+      color: var(--blue);
       margin-bottom: 0.5rem;
     }
     .page-title {
@@ -110,7 +110,7 @@
     .stat-value {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2rem;
-      color: var(--red);
+      color: var(--blue);
       line-height: 1;
     }
     .stat-label {
@@ -168,7 +168,7 @@
       -webkit-appearance: none;
       border-radius: 0;
     }
-    input:focus, select:focus, textarea:focus { border-color: var(--red); }
+    input:focus, select:focus, textarea:focus { border-color: var(--blue); }
     select option { background: var(--bg3); }
     textarea { resize: vertical; min-height: 80px; }
     .btn-submit {
@@ -177,14 +177,14 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      background: var(--red);
+      background: var(--blue);
       color: #fff;
       border: none;
       padding: 0.75rem 2rem;
       cursor: pointer;
       transition: background 0.2s;
     }
-    .btn-submit:hover { background: var(--red-h); }
+    .btn-submit:hover { background: var(--blue-h); }
 
     /* LOG LIST */
     #log-list { border-top: 1px solid var(--border); }
@@ -256,7 +256,7 @@
       padding: 0;
       transition: color 0.2s;
     }
-    .btn-delete:hover { color: var(--red); }
+    .btn-delete:hover { color: var(--blue); }
 
     /* EMPTY STATE */
     .empty {
@@ -284,14 +284,93 @@
       .log-entry { grid-template-columns: 70px 1fr; }
       .entry-right { display: none; }
     }
+    /* PASSWORD LOCK */
+    #lock-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--bg);
+      align-items: center;
+      justify-content: center;
+    }
+    .lock-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+    }
+    .lock-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .lock-sub {
+      font-size: 0.9rem;
+      color: var(--dim);
+      margin-bottom: 2rem;
+    }
+    .lock-form { margin-bottom: 0; }
+    .lock-form input {
+      margin-bottom: 0.75rem;
+      text-align: center;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+    .lock-btn {
+      width: 100%;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      padding: 0.75rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lock-btn:hover { background: var(--blue-h); }
+    #lock-error {
+      display: none;
+      color: #c0392b;
+      font-size: 0.82rem;
+      margin-bottom: 0.75rem;
+    }
+    .lock-hint {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .lock-hint code { color: var(--blue); font-style: normal; }
   </style>
 </head>
 <body>
+
+  <!-- PASSWORD OVERLAY -->
+  <div id="lock-overlay">
+    <div class="lock-box">
+      <p class="label">Maintenance Log</p>
+      <h2 class="lock-title">Protected</h2>
+      <p class="lock-sub">Enter your password to access service records.</p>
+      <div class="lock-form">
+        <input type="password" id="lock-input" placeholder="Password" autocomplete="current-password">
+        <p id="lock-error">Incorrect password. Try again.</p>
+        <button class="lock-btn" onclick="unlock()">Unlock</button>
+      </div>
+      <p class="lock-hint">Default password: <code>xdiavel</code> — change it in the page source.</p>
+    </div>
+  </div>
 
   <nav>
     <a href="index.html" class="nav-logo">DUCATI</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
+      <li><a href="bike.html">My Bike</a></li>
       <li><a href="maintenance.html" class="active">Maintenance</a></li>
       <li><a href="rides.html">Ride Log</a></li>
       <li><a href="exam.html">M Exam</a></li>
@@ -378,6 +457,36 @@
   </main>
 
   <script>
+    // ── PASSWORD LOCK ─────────────────────────────────────────────────────────
+    // Change this to whatever password you want
+    const PASSWORD = 'xdiavel';
+
+    (function () {
+      if (sessionStorage.getItem('maint_auth') !== '1') {
+        document.getElementById('lock-overlay').style.display = 'flex';
+        document.querySelector('main').style.display = 'none';
+        document.getElementById('lock-input').addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') unlock();
+        });
+        document.getElementById('lock-input').focus();
+      }
+    })();
+
+    function unlock() {
+      const val = document.getElementById('lock-input').value;
+      if (val === PASSWORD) {
+        sessionStorage.setItem('maint_auth', '1');
+        document.getElementById('lock-overlay').style.display = 'none';
+        document.querySelector('main').style.display = 'block';
+        render();
+      } else {
+        document.getElementById('lock-error').style.display = 'block';
+        document.getElementById('lock-input').value = '';
+        document.getElementById('lock-input').focus();
+      }
+    }
+
+    // ── DATA ──────────────────────────────────────────────────────────────────
     const KEY = 'maintenanceLog';
 
     function load() {
@@ -464,8 +573,11 @@
       render();
     });
 
-    document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
-    render();
+    // Only initialise if already authenticated
+    if (sessionStorage.getItem('maint_auth') === '1') {
+      document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+      render();
+    }
   </script>
 
 </body>

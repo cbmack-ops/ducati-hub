@@ -10,15 +10,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:    #CC0000;
-      --red-h:  #e60000;
-      --bg:     #0d0d0d;
-      --bg2:    #131313;
-      --bg3:    #1a1a1a;
-      --border: #242424;
-      --text:   #f0f0f0;
-      --dim:    #888888;
-      --muted:  #444444;
+      --blue:   #1a3560;
+      --blue-h: #0f2240;
+      --bg:     #f0f0f0;
+      --bg2:    #e8e8e8;
+      --bg3:    #dcdcdc;
+      --border: #c4c4c4;
+      --text:   #111111;
+      --dim:    #555555;
+      --muted:  #9e9e9e;
     }
 
     body {
@@ -39,14 +39,14 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 2.5rem;
-      background: rgba(13,13,13,0.96);
+      background: rgba(240,240,240,0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.75rem;
-      color: var(--red);
+      color: var(--blue);
       letter-spacing: 0.05em;
       text-decoration: none;
     }
@@ -61,7 +61,7 @@
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--red); }
+    .nav-links a:hover, .nav-links a.active { color: var(--blue); }
 
     /* PAGE HEADER */
     .page-header {
@@ -75,7 +75,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      color: var(--red);
+      color: var(--blue);
       margin-bottom: 0.5rem;
     }
     .page-title {
@@ -110,7 +110,7 @@
     .stat-value {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2rem;
-      color: var(--red);
+      color: var(--blue);
       line-height: 1;
     }
     .stat-label {
@@ -174,7 +174,7 @@
       -webkit-appearance: none;
       border-radius: 0;
     }
-    input:focus, textarea:focus { border-color: var(--red); }
+    input:focus, textarea:focus { border-color: var(--blue); }
     textarea { resize: vertical; min-height: 80px; }
     .btn-submit {
       font-family: 'Barlow Condensed', sans-serif;
@@ -182,14 +182,14 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      background: var(--red);
+      background: var(--blue);
       color: #fff;
       border: none;
       padding: 0.75rem 2rem;
       cursor: pointer;
       transition: background 0.2s;
     }
-    .btn-submit:hover { background: var(--red-h); }
+    .btn-submit:hover { background: var(--blue-h); }
 
     /* RIDE LIST */
     #log-list { border-top: 1px solid var(--border); }
@@ -268,7 +268,7 @@
       padding: 0;
       transition: color 0.2s;
     }
-    .btn-delete:hover { color: var(--red); }
+    .btn-delete:hover { color: var(--blue); }
 
     /* EMPTY STATE */
     .empty {
@@ -305,6 +305,7 @@
     <a href="index.html" class="nav-logo">DUCATI</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
+      <li><a href="bike.html">My Bike</a></li>
       <li><a href="maintenance.html">Maintenance</a></li>
       <li><a href="rides.html" class="active">Ride Log</a></li>
       <li><a href="exam.html">M Exam</a></li>
