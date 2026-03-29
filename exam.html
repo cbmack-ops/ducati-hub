@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M Exam Prep &mdash; Ducati Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:      #CC0000;
+      --red-h:    #e60000;
+      --green:    #22c55e;
+      --green-bg: rgba(34,197,94,0.08);
+      --wrong:    #ef4444;
+      --wrong-bg: rgba(239,68,68,0.08);
+      --bg:       #0d0d0d;
+      --bg2:      #131313;
+      --bg3:      #1a1a1a;
+      --border:   #242424;
+      --text:     #f0f0f0;
+      --dim:      #888888;
+      --muted:    #444444;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', system-ui, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(13,13,13,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: var(--red);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.25rem;
+    }
+
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--red); }
+
+    /* ── PAGE HEADER ─────────────────────────────── */
+    .page-header {
+      padding: 100px 2.5rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+
+    .page-header .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 6vw, 64px);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .page-header p {
+      font-size: 0.9rem;
+      color: var(--dim);
+      margin-top: 0.75rem;
+      max-width: 560px;
+    }
+
+    /* ── MODE SWITCHER ───────────────────────────── */
+    .mode-bar {
+      display: flex;
+      gap: 2px;
+      padding: 1.5rem 2.5rem;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mode-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--dim);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-btn:hover { color: var(--text); border-color: var(--muted); }
+    .mode-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+
+    /* ── MAIN CONTENT ────────────────────────────── */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2.5rem 6rem;
+    }
+
+    /* ── QUIZ SCREEN ─────────────────────────────── */
+    #screen-quiz { display: block; }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .progress-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--dim);
+    }
+
+    .progress-bar {
+      height: 2px;
+      background: var(--border);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      background: var(--red);
+      transition: width 0.4s ease;
+    }
+
+    .question-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: left;
+      width: 100%;
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .option:hover:not(:disabled) {
+      border-color: var(--dim);
+      background: var(--bg3);
+    }
+
+    .option:disabled { cursor: default; }
+
+    .option.selected  { border-color: var(--dim); background: var(--bg3); }
+    .option.correct   { border-color: var(--green); background: var(--green-bg); }
+    .option.wrong     { border-color: var(--wrong);  background: var(--wrong-bg);  }
+
+    .option-letter {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      line-height: 1.3;
+      min-width: 1.2rem;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+
+    .option.correct .option-letter { color: var(--green); }
+    .option.wrong   .option-letter { color: var(--wrong); }
+    .option.selected .option-letter { color: var(--text); }
+
+    /* Feedback box */
+    .feedback {
+      display: none;
+      padding: 1rem 1.5rem;
+      border-left: 3px solid var(--border);
+      background: var(--bg3);
+      font-size: 0.88rem;
+      color: var(--dim);
+      line-height: 1.7;
+      margin-top: 1rem;
+    }
+
+    .feedback.show { display: block; }
+    .feedback.correct-fb { border-color: var(--green); }
+    .feedback.wrong-fb   { border-color: var(--wrong); }
+
+    .feedback strong {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.4rem;
+    }
+
+    .feedback.correct-fb strong { color: var(--green); }
+    .feedback.wrong-fb   strong { color: var(--wrong);  }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+
+    /* ── RESULTS SCREEN ──────────────────────────── */
+    #screen-results { display: none; }
+
+    .results-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 3rem 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .results-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--dim);
+      margin-bottom: 1.25rem;
+    }
+
+    .results-score {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(80px, 15vw, 120px);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .results-score.pass  { color: var(--green); }
+    .results-score.fail  { color: var(--wrong); }
+    .results-score.close { color: #f59e0b; }
+
+    .results-fraction {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      color: var(--dim);
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .results-message {
+      font-size: 0.9rem;
+      color: var(--dim);
+      margin-top: 1.25rem;
+      line-height: 1.7;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .results-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--border);
+      margin: 2rem auto;
+    }
+
+    .results-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    /* Question review in results */
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .review-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .review-icon {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.5rem;
+      min-width: 44px;
+      text-align: center;
+    }
+
+    .review-icon.ok  { background: var(--green-bg); color: var(--green); border: 1px solid var(--green); }
+    .review-icon.bad { background: var(--wrong-bg);  color: var(--wrong);  border: 1px solid var(--wrong); }
+
+    .review-q {
+      font-size: 0.85rem;
+      color: var(--dim);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .review-q strong {
+      display: block;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── STUDY MODE ──────────────────────────────── */
+    #screen-study { display: none; }
+
+    .study-intro {
+      font-size: 0.88rem;
+      color: var(--dim);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .study-item {
+      border: 1px solid var(--border);
+      margin-bottom: 1rem;
+      background: var(--bg2);
+    }
+
+    .study-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .study-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--red);
+      min-width: 2rem;
+      line-height: 1.3;
+    }
+
+    .study-q {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      flex: 1;
+      padding-top: 0.05rem;
+    }
+
+    .study-chevron {
+      font-size: 0.7rem;
+      color: var(--muted);
+      transition: transform 0.2s;
+      padding-top: 0.2rem;
+    }
+
+    .study-item.open .study-chevron { transform: rotate(90deg); }
+
+    .study-body {
+      display: none;
+      padding: 0 1.5rem 1.5rem 4rem;
+    }
+
+    .study-item.open .study-body { display: block; }
+
+    .study-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .study-option {
+      font-size: 0.85rem;
+      padding: 0.5rem 0.75rem;
+      color: var(--dim);
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .study-option.correct-ans {
+      color: var(--green);
+      background: var(--green-bg);
+      border-left: 2px solid var(--green);
+    }
+
+    .study-option-letter {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      min-width: 1rem;
+    }
+
+    .study-explanation {
+      font-size: 0.83rem;
+      color: var(--dim);
+      line-height: 1.75;
+      border-left: 2px solid var(--border);
+      padding-left: 0.9rem;
+      margin-top: 0.75rem;
+    }
+
+    /* ── SCORE HISTORY ───────────────────────────── */
+    #history-section {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2.5rem 5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .history-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .history-empty {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .history-table th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-align: left;
+      padding: 0 1rem 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .history-table td {
+      padding: 0.85rem 1rem 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--dim);
+      vertical-align: middle;
+    }
+
+    .history-table td:first-child { color: var(--text); font-variant-numeric: tabular-nums; }
+
+    .score-pill {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.2rem 0.6rem;
+    }
+
+    .pill-pass  { background: var(--green-bg); color: var(--green); border: 1px solid var(--green); }
+    .pill-close { background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid #f59e0b; }
+    .pill-fail  { background: var(--wrong-bg); color: var(--wrong); border: 1px solid var(--wrong); }
+
+    /* ── BUTTONS ─────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.8rem 2rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--red); color: #fff; }
+    .btn-primary:hover { background: var(--red-h); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header { padding: 90px 1.25rem 2.5rem; }
+      .mode-bar { padding: 1.25rem; }
+      main { padding: 2.5rem 1.25rem 5rem; }
+      .question-card { padding: 1.75rem; }
+      .results-card { padding: 2rem 1.5rem; }
+      #history-section { padding: 2.5rem 1.25rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">DUCATI</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="maintenance.html">Maintenance</a></li>
+      <li><a href="rides.html">Ride Log</a></li>
+      <li><a href="exam.html" class="active">M Exam</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <p class="eyebrow">Ontario MTO Handbook</p>
+    <h1>M Exam Prep</h1>
+    <p>Practice questions drawn from road signs, rules of the road, and motorcycle-specific safe riding. 10 random questions per quiz.</p>
+  </div>
+
+  <div class="mode-bar">
+    <button class="mode-btn active" id="btn-quiz" onclick="setMode('quiz')">Quiz Mode</button>
+    <button class="mode-btn" id="btn-study" onclick="setMode('study')">Study Mode</button>
+  </div>
+
+  <main>
+
+    <!-- ── QUIZ SCREEN ────────────────────────────── -->
+    <div id="screen-quiz">
+      <div class="progress-wrap">
+        <span class="progress-label" id="progressLabel">Question 1 of 10</span>
+        <span class="progress-label" id="scoreRunning">0 correct</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:10%"></div>
+      </div>
+
+      <div class="question-card">
+        <p class="question-text" id="questionText"></p>
+        <div class="options" id="optionsList"></div>
+        <div class="feedback" id="feedback">
+          <strong id="feedbackLabel"></strong>
+          <span id="feedbackText"></span>
+        </div>
+      </div>
+
+      <div class="quiz-nav">
+        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none">Next Question &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ── RESULTS SCREEN ─────────────────────────── -->
+    <div id="screen-results">
+      <div class="results-card">
+        <p class="results-eyebrow">Quiz Complete</p>
+        <div class="results-score" id="resultsPct"></div>
+        <div class="results-fraction" id="resultsFraction"></div>
+        <p class="results-message" id="resultsMessage"></p>
+        <div class="results-rule"></div>
+        <div class="results-actions">
+          <button class="btn btn-primary" onclick="startQuiz()">Retry Quiz</button>
+          <button class="btn btn-outline" onclick="setMode('study')">Study Mode</button>
+        </div>
+      </div>
+
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.03em;margin-bottom:1rem;">Question Review</h3>
+      <div class="review-list" id="reviewList"></div>
+    </div>
+
+    <!-- ── STUDY SCREEN ───────────────────────────── -->
+    <div id="screen-study">
+      <p class="study-intro">All <span id="studyCount"></span> questions from the quiz pool, with correct answers and explanations. Click any question to expand it.</p>
+      <div id="studyList"></div>
+    </div>
+
+  </main>
+
+  <!-- ── SCORE HISTORY ──────────────────────────── -->
+  <section id="history-section">
+    <h2 class="history-title">Score History</h2>
+    <div id="historyContainer">
+      <p class="history-empty">No quizzes completed yet. Take your first quiz above.</p>
+    </div>
+    <div style="margin-top:1.5rem">
+      <button class="btn btn-outline" onclick="clearHistory()" style="font-size:0.72rem;padding:.6rem 1.25rem">Clear History</button>
+    </div>
+  </section>
+
+  <script>
+  // ── QUESTION POOL ──────────────────────────────────────────────────────────
+  const POOL = [
+    {
+      q: "In Ontario, what is the blood alcohol concentration (BAC) limit for novice riders on an M1 or M2 licence?",
+      opts: ["0.08 — same as fully licensed drivers", "0.05 — the 'warn' range", "0.00 — zero tolerance", "0.03 — lower than the standard limit"],
+      ans: 2,
+      exp: "Ontario has a zero-tolerance policy for novice riders (M1/M2). Any detectable alcohol will result in an immediate licence suspension."
+    },
+    {
+      q: "When riding in a group, what formation is recommended to maintain visibility and spacing?",
+      opts: ["Side by side in pairs", "Single file, one behind the other", "Staggered formation — offset in the lane", "V-formation with the leader at the front"],
+      ans: 2,
+      exp: "A staggered formation lets each rider maintain a two-second following gap from the rider directly ahead, while staying one-second behind the rider offset beside them. It maximises visibility and gives more reaction time."
+    },
+    {
+      q: "What is the minimum recommended following distance behind the vehicle ahead when riding in good conditions?",
+      opts: ["1 second", "2 seconds", "4 seconds", "6 seconds"],
+      ans: 1,
+      exp: "Ontario MTO recommends a minimum two-second following distance in ideal conditions. In rain, low visibility, or heavy traffic, extend to three to four seconds or more."
+    },
+    {
+      q: "Which lane position generally gives you the greatest visibility to oncoming drivers and the most space on your right?",
+      opts: ["Left third of the lane", "Centre of the lane", "Right third of the lane", "It makes no difference"],
+      ans: 0,
+      exp: "The left third positions you to be seen by oncoming traffic and by vehicles in driveways, while leaving room on your right to manoeuvre. Avoid riding in the centre where oil and coolant often accumulate."
+    },
+    {
+      q: "What is the 'SEE' strategy taught in Ontario's motorcycle safety program?",
+      opts: ["Speed up, Evade, Escape", "Search, Evaluate, Execute", "Stop, Examine, Exit", "Signal, Enter, Exit"],
+      ans: 1,
+      exp: "SEE stands for Search (scan the road ahead for hazards), Evaluate (assess the risk and your options), and Execute (act — steer, brake, accelerate, or communicate)."
+    },
+    {
+      q: "When crossing railroad tracks, the safest angle to cross is:",
+      opts: ["At 45 degrees — the standard diagonal", "At 90 degrees — straight across, perpendicular to the tracks", "At any angle if you slow down first", "Parallel to the tracks to avoid the gap"],
+      ans: 1,
+      exp: "Crossing at 90 degrees (perpendicular) prevents your front wheel from dropping into the gap between rail and road surface, which can cause a sudden loss of control."
+    },
+    {
+      q: "What shape and colour is the 'No Passing Zone' sign in Ontario?",
+      opts: ["Yellow diamond with a car symbol", "Red octagon", "Pennant-shaped (triangular) yellow sign on the left side", "Rectangular white sign with red text"],
+      ans: 2,
+      exp: "The No Passing Zone sign is a yellow pennant (horizontal triangle pointing right) mounted on the left side of the road, warning that passing is prohibited ahead."
+    },
+    {
+      q: "What does a flashing red traffic light mean?",
+      opts: ["Slow down — treat as a yield", "Stop, then proceed when it is safe to do so", "Prepare to stop; the light is about to turn red", "Emergency vehicles are nearby"],
+      ans: 1,
+      exp: "A flashing red light is treated the same as a stop sign: come to a complete stop, yield to pedestrians and cross traffic, then proceed when safe."
+    },
+    {
+      q: "When riding at night, you should:",
+      opts: ["Ride faster to reduce time spent in the dark", "Follow other vehicles closely to benefit from their headlights", "Increase your following distance beyond the daytime minimum", "Use high beams at all times"],
+      ans: 2,
+      exp: "Your reaction distance stays the same at night but your sight distance is reduced by darkness. Increasing following distance compensates for this gap."
+    },
+    {
+      q: "Roughly what percentage of a motorcycle's total stopping power comes from the front brake?",
+      opts: ["25%", "50%", "70%", "90%"],
+      ans: 2,
+      exp: "The front brake provides approximately 70% of stopping power because braking shifts weight forward, increasing front-wheel grip. Use both brakes smoothly together for the shortest stops."
+    },
+    {
+      q: "If braking becomes necessary while already in a curve, you should:",
+      opts: ["Apply the rear brake only — the front is too risky in a lean", "Apply full emergency braking immediately", "Avoid braking if possible; if required, apply both brakes gradually and progressively", "Straighten the bike fully before touching either brake"],
+      ans: 2,
+      exp: "Braking while leaned reduces available traction for cornering. If you must brake in a curve, do it smoothly and progressively. Ideally, slow down before entering the curve."
+    },
+    {
+      q: "In Ontario, may motorcycles use High Occupancy Vehicle (HOV) lanes?",
+      opts: ["No — HOV lanes are only for vehicles with two or more occupants", "Yes — but only during off-peak hours", "Yes — motorcycles may use HOV lanes at any time regardless of the number of riders", "Only if they display a special HOV permit"],
+      ans: 2,
+      exp: "Under Ontario's Highway Traffic Act, motorcycles are permitted to use HOV lanes at any time even with only the rider aboard."
+    },
+    {
+      q: "Counter-steering refers to:",
+      opts: ["Steering against a skid by turning the bars opposite to the slide", "Pressing forward on the handlebar on the side you want to turn — e.g., press right to turn right", "Using body weight alone to initiate a turn at low speed", "Holding the bars straight while leaning the bike under you"],
+      ans: 1,
+      exp: "At speeds above roughly 20 km/h, pushing forward on the right grip causes the bike to lean right and turn right. This counter-intuitive technique is counter-steering and is the primary method of directional control at road speeds."
+    },
+    {
+      q: "When should you check your motorcycle's tire pressure?",
+      opts: ["Immediately after a ride, when tires are warm", "Before riding, when tires are cold", "Only if the bike feels unstable", "Every 5,000 km regardless of temperature"],
+      ans: 1,
+      exp: "Tires should be checked cold (before riding or at least three hours after stopping). Heat from riding increases pressure and gives a false reading."
+    },
+    {
+      q: "A dog runs toward your motorcycle. The best response is:",
+      opts: ["Brake hard and stop before it reaches you", "Swerve sharply away from it", "Slow down as it approaches, then accelerate past once it is alongside", "Maintain speed and steer around it"],
+      ans: 2,
+      exp: "Slowing slightly as the dog approaches reduces the chance of collision, then accelerating away quickly as it draws level discourages chase and puts distance between you."
+    },
+    {
+      q: "What does a solid yellow X signal displayed above a lane on a highway mean?",
+      opts: ["This is a high-speed express lane — use it", "Speed limit ahead is reduced", "Do not use this lane", "Merge left; lane ends ahead"],
+      ans: 2,
+      exp: "A yellow X means the lane is about to close or is otherwise unsafe to use. A green arrow means the lane is open; a red X means do not enter."
+    },
+    {
+      q: "When riding through a curve, where should your eyes be focused?",
+      opts: ["On the road surface immediately in front of your wheel", "On the centre line to maintain lane position", "Through the curve toward the exit point", "On the speedometer to monitor entry speed"],
+      ans: 2,
+      exp: "Looking through the curve to the exit is a fundamental technique: the motorcycle follows where your eyes lead. Looking far ahead also gives you earlier warning of hazards."
+    },
+    {
+      q: "What is the minimum age to apply for an Ontario M1 (motorcycle) licence?",
+      opts: ["14", "16", "17", "18"],
+      ans: 1,
+      exp: "You must be at least 16 years old to apply for an M1 licence in Ontario. You must also pass a vision test and a knowledge test about road signs and rules."
+    },
+    {
+      q: "What should you do if a front tire blows out at highway speed?",
+      opts: ["Apply the front brake immediately to reduce speed", "Grip the handlebars firmly, ease off the throttle gradually, and steer to a safe stop — avoid braking hard", "Swerve to the shoulder as quickly as possible", "Apply maximum rear brake force only"],
+      ans: 1,
+      exp: "A blowout causes instability. Keep a firm grip, roll off the throttle gradually to slow down without the bike pitching, and steer smoothly to a safe area before stopping. Hard braking can cause a fall."
+    },
+    {
+      q: "In Ontario, the maximum speed limit on most 400-series provincial highways is:",
+      opts: ["90 km/h", "100 km/h", "110 km/h", "120 km/h"],
+      ans: 1,
+      exp: "The posted maximum speed on most Ontario 400-series freeways is 100 km/h unless otherwise posted. Always ride at a speed appropriate for conditions, which may be lower than the posted limit."
+    },
+    {
+      q: "When a larger vehicle is passing you, you should position your motorcycle:",
+      opts: ["In the centre of the lane to maximise buffer space on both sides", "In the left portion of your lane to give the passing vehicle more room", "In the right portion of your lane, away from the passing vehicle", "As far right as possible, near the shoulder"],
+      ans: 1,
+      exp: "Moving to the left portion of your lane increases the gap between your bike and the passing vehicle, reducing the effect of wind blast and giving you more room to manage any turbulence."
+    },
+    {
+      q: "What does a downward-pointing red triangle (with a red border and white interior) mean in Ontario?",
+      opts: ["Stop completely and wait for a signal", "Yield — slow down and give the right-of-way", "Wrong way — do not enter", "Construction zone — obey flagpersons"],
+      ans: 1,
+      exp: "An inverted triangle with a red border and white interior is the Yield sign. You must slow or stop and give the right-of-way to traffic already in the intersection or road you are entering."
+    },
+    {
+      q: "Which of the following is a common road-surface hazard that is especially dangerous on a motorcycle?",
+      opts: ["Freshly painted lane markings — they reduce skid risk", "A centre-lane oil drip strip left by slow traffic", "Rough pavement texture — it improves grip", "White stop-bar paint in dry weather"],
+      ans: 1,
+      exp: "The centre of travel lanes accumulates oil, coolant, and other fluid drips. This strip is especially slippery when wet. Ride in the left or right third of the lane where tires track clean pavement."
+    },
+    {
+      q: "When do you need to shoulder-check (turn your head to look back) in addition to checking mirrors?",
+      opts: ["Only when changing lanes", "Only when turning left", "When changing lanes, merging, or turning — any time there may be a vehicle in your blind spot", "Shoulder checks are not required for motorcyclists"],
+      ans: 2,
+      exp: "Mirrors have blind spots. A head check is required whenever you move laterally — changing lanes, merging onto a highway, or turning — to confirm no vehicle is alongside you."
+    },
+    {
+      q: "What is the recommended following distance when riding in reduced visibility conditions such as heavy rain or fog?",
+      opts: ["1 second — the same as in good conditions", "2 seconds — the standard minimum", "3 to 4 seconds or more — significantly greater than in good conditions", "Reduced visibility has no effect on required following distance"],
+      ans: 2,
+      exp: "Wet pavement increases stopping distance and poor visibility reduces the time you have to react. Ontario MTO recommends extending following distance to three seconds or more in adverse conditions."
+    }
+  ];
+
+  // ── STATE ──────────────────────────────────────────────────────────────────
+  let quizQ   = [];   // 10-question subset
+  let qIdx    = 0;
+  let correct = 0;
+  let answered = false;
+  let currentMode = 'quiz';
+
+  // ── INIT ───────────────────────────────────────────────────────────────────
+  document.getElementById('studyCount').textContent = POOL.length;
+  startQuiz();
+  renderStudy();
+  renderHistory();
+
+  // ── MODE SWITCHER ─────────────────────────────────────────────────────────
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('btn-quiz').classList.toggle('active', mode === 'quiz');
+    document.getElementById('btn-study').classList.toggle('active', mode === 'study');
+    document.getElementById('screen-quiz').style.display    = mode === 'quiz'  ? 'block' : 'none';
+    document.getElementById('screen-results').style.display = 'none';
+    document.getElementById('screen-study').style.display   = mode === 'study' ? 'block' : 'none';
+    if (mode === 'quiz') startQuiz();
+  }
+
+  // ── QUIZ ──────────────────────────────────────────────────────────────────
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startQuiz() {
+    quizQ    = shuffle(POOL).slice(0, 10);
+    qIdx     = 0;
+    correct  = 0;
+    answered = false;
+
+    document.getElementById('screen-results').style.display = 'none';
+    document.getElementById('screen-quiz').style.display    = 'block';
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = quizQ[qIdx];
+    answered = false;
+
+    document.getElementById('progressLabel').textContent = `Question ${qIdx + 1} of ${quizQ.length}`;
+    document.getElementById('scoreRunning').textContent  = `${correct} correct`;
+    document.getElementById('progressFill').style.width  = `${((qIdx + 1) / quizQ.length) * 100}%`;
+    document.getElementById('questionText').textContent  = q.q;
+    document.getElementById('nextBtn').style.display     = 'none';
+
+    const fb = document.getElementById('feedback');
+    fb.className = 'feedback';
+
+    const list = document.getElementById('optionsList');
+    list.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+      btn.onclick = () => selectAnswer(i);
+      list.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(chosen) {
+    if (answered) return;
+    answered = true;
+
+    const q    = quizQ[qIdx];
+    const btns = document.querySelectorAll('.option');
+    const isCorrect = chosen === q.ans;
+
+    if (isCorrect) correct++;
+
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.ans)  btn.classList.add('correct');
+      if (i === chosen && !isCorrect) btn.classList.add('wrong');
+    });
+
+    const fb = document.getElementById('feedback');
+    fb.className = 'feedback show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+    document.getElementById('feedbackLabel').textContent = isCorrect ? 'Correct' : 'Incorrect';
+    document.getElementById('feedbackText').textContent  = q.exp;
+
+    document.getElementById('scoreRunning').textContent = `${correct} correct`;
+
+    const nextBtn = document.getElementById('nextBtn');
+    nextBtn.style.display   = 'inline-block';
+    nextBtn.textContent     = qIdx + 1 < quizQ.length ? 'Next Question \u2192' : 'See Results \u2192';
+  }
+
+  function nextQuestion() {
+    qIdx++;
+    if (qIdx >= quizQ.length) {
+      showResults();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  // ── RESULTS ───────────────────────────────────────────────────────────────
+  function showResults() {
+    document.getElementById('screen-quiz').style.display    = 'none';
+    document.getElementById('screen-results').style.display = 'block';
+
+    const pct = Math.round((correct / quizQ.length) * 100);
+    const el  = document.getElementById('resultsPct');
+    el.textContent = pct + '%';
+    el.className   = 'results-score ' + (pct >= 80 ? 'pass' : pct >= 60 ? 'close' : 'fail');
+
+    document.getElementById('resultsFraction').textContent = `${correct} / ${quizQ.length} correct`;
+
+    const msgs = {
+      pass:  'Strong result. Keep a few more practice runs in the tank before test day.',
+      close: 'Getting there. Review the missed questions in Study Mode and try again.',
+      fail:  'More repetition needed. Switch to Study Mode to read each explanation carefully.'
+    };
+    document.getElementById('resultsMessage').textContent =
+      pct >= 80 ? msgs.pass : pct >= 60 ? msgs.close : msgs.fail;
+
+    // Review list
+    const list = document.getElementById('reviewList');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    quizQ.forEach((q, i) => {
+      // We need to track user answers — store them in a parallel array
+      // (see selectAnswer below — we'll fix this with a stored array)
+    });
+    // Render using stored userAnswers array
+    userAnswers.forEach((ua, i) => {
+      const q   = quizQ[i];
+      const ok  = ua === q.ans;
+      const div = document.createElement('div');
+      div.className = 'review-item';
+      div.innerHTML = `
+        <span class="review-icon ${ok ? 'ok' : 'bad'}">${ok ? 'Pass' : 'Fail'}</span>
+        <div class="review-q">
+          <strong>${q.q}</strong>
+          ${!ok ? `Your answer: ${letters[ua]} — ${q.opts[ua]}<br>` : ''}
+          Correct: ${letters[q.ans]} — ${q.opts[q.ans]}
+        </div>`;
+      list.appendChild(div);
+    });
+
+    // Persist to history
+    saveHistory(correct, quizQ.length);
+    renderHistory();
+    document.getElementById('history-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Track user answers
+  let userAnswers = [];
+
+  // Override startQuiz to reset userAnswers too
+  const _origStart = startQuiz;
+  startQuiz = function () {
+    userAnswers = [];
+    _origStart();
+  };
+
+  // Patch selectAnswer to push to userAnswers
+  const _origSelect = selectAnswer;
+  selectAnswer = function (chosen) {
+    userAnswers.push(chosen);
+    _origSelect(chosen);
+  };
+
+  // ── HISTORY ───────────────────────────────────────────────────────────────
+  function saveHistory(score, total) {
+    const h = JSON.parse(localStorage.getItem('examHistory') || '[]');
+    h.unshift({ date: new Date().toISOString(), score, total });
+    if (h.length > 30) h.splice(30);
+    localStorage.setItem('examHistory', JSON.stringify(h));
+  }
+
+  function renderHistory() {
+    const h   = JSON.parse(localStorage.getItem('examHistory') || '[]');
+    const el  = document.getElementById('historyContainer');
+
+    if (h.length === 0) {
+      el.innerHTML = '<p class="history-empty">No quizzes completed yet. Take your first quiz above.</p>';
+      return;
+    }
+
+    const rows = h.map((entry, idx) => {
+      const pct    = Math.round((entry.score / entry.total) * 100);
+      const cls    = pct >= 80 ? 'pill-pass' : pct >= 60 ? 'pill-close' : 'pill-fail';
+      const dateStr = new Date(entry.date).toLocaleDateString('en-CA', {
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+      return `<tr>
+        <td>#${h.length - idx}</td>
+        <td>${dateStr}</td>
+        <td>${entry.score} / ${entry.total}</td>
+        <td><span class="score-pill ${cls}">${pct}%</span></td>
+      </tr>`;
+    }).join('');
+
+    el.innerHTML = `<table class="history-table">
+      <thead><tr>
+        <th>Run</th><th>Date</th><th>Score</th><th>Result</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  }
+
+  function clearHistory() {
+    if (!confirm('Clear all score history?')) return;
+    localStorage.removeItem('examHistory');
+    renderHistory();
+  }
+
+  // ── STUDY MODE ─────────────────────────────────────────────────────────────
+  function renderStudy() {
+    const list    = document.getElementById('studyList');
+    const letters = ['A','B','C','D'];
+    list.innerHTML = '';
+
+    POOL.forEach((q, idx) => {
+      const item = document.createElement('div');
+      item.className = 'study-item';
+
+      const optsHtml = q.opts.map((opt, i) => `
+        <div class="study-option ${i === q.ans ? 'correct-ans' : ''}">
+          <span class="study-option-letter">${letters[i]}</span>
+          <span>${opt}</span>
+        </div>`).join('');
+
+      item.innerHTML = `
+        <div class="study-header" onclick="toggleStudy(this)">
+          <span class="study-num">${String(idx + 1).padStart(2,'0')}</span>
+          <span class="study-q">${q.q}</span>
+          <span class="study-chevron">&#9654;</span>
+        </div>
+        <div class="study-body">
+          <div class="study-options">${optsHtml}</div>
+          <div class="study-explanation">${q.exp}</div>
+        </div>`;
+
+      list.appendChild(item);
+    });
+  }
+
+  function toggleStudy(header) {
+    const item = header.parentElement;
+    item.classList.toggle('open');
+  }
+  </script>
+
+</body>
+</html>
