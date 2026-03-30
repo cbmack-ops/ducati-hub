@@ -9,8 +9,8 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: #ffffff;
-    color: #111827;
+    background: #0d0d0d;
+    color: #ffffff;
     font-family: 'Cormorant Garamond', serif;
     overflow-x: hidden;
   }
@@ -25,9 +25,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 2.5rem;
-    background: rgba(255,255,255,0.95);
+    background: rgba(13,13,13,0.96);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
   .nav-left { display: flex; align-items: center; gap: 2.5rem; }
@@ -36,7 +36,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.6rem;
     letter-spacing: 0.05em;
-    color: #111111;
+    color: #ffffff;
     text-decoration: none;
     white-space: nowrap;
   }
@@ -55,7 +55,7 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #666666;
+    color: rgba(255,255,255,0.5);
     text-decoration: none;
     transition: color 0.2s;
   }
@@ -72,9 +72,9 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #111111;
+    color: rgba(255,255,255,0.8);
     text-decoration: none;
-    border: 1px solid #e0e0e0;
+    border: 1px solid rgba(255,255,255,0.2);
     padding: 0.35rem 0.9rem;
     transition: all 0.2s;
   }
@@ -87,7 +87,7 @@
     .nav-links a { font-size: 0.7rem; letter-spacing: 0.1em; }
   }
 
-  /* HERO — light background with animated grid */
+  /* HERO */
   .hero {
     position: relative;
     height: 90vh;
@@ -97,7 +97,7 @@
     justify-content: flex-end;
     padding: 0 6vw 8vh;
     overflow: hidden;
-    background: #ffffff;
+    background: #0d0d0d;
   }
 
   .hero::before {
@@ -105,19 +105,18 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 60% 40%, rgba(26,53,96,0.07) 0%, transparent 60%),
-      linear-gradient(135deg, #f8fafc 0%, #eef2f7 50%, #f8fafc 100%);
+      radial-gradient(ellipse at 60% 40%, rgba(232,135,10,0.08) 0%, transparent 60%),
+      linear-gradient(135deg, #0d0d0d 0%, #111111 50%, #0d0d0d 100%);
     z-index: 0;
   }
 
-  /* animated grid — subtle on white */
   .hero::after {
     content: '';
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(26,53,96,0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(26,53,96,0.055) 1px, transparent 1px);
+      linear-gradient(rgba(232,135,10,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,135,10,0.06) 1px, transparent 1px);
     background-size: 60px 60px;
     z-index: 0;
     animation: gridShift 20s linear infinite;
@@ -133,7 +132,7 @@
     font-family: 'Space Mono', monospace;
     font-size: 0.65rem;
     letter-spacing: 0.4em;
-    color: #1a3560;
+    color: #E8870A;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
     opacity: 0;
@@ -146,13 +145,13 @@
     font-size: clamp(4rem, 13vw, 13rem);
     line-height: 0.88;
     letter-spacing: 0.02em;
-    color: #111827;
+    color: #ffffff;
     opacity: 0;
     animation: fadeUp 1s ease 0.5s forwards;
   }
 
   .hero-title span {
-    color: #1a3560;
+    color: rgba(255,255,255,0.35);
     display: block;
   }
   .hero-title .fire { color: #E8870A; display: inline; }
@@ -161,7 +160,7 @@
     position: relative; z-index: 1;
     font-size: 1.2rem;
     font-style: italic;
-    color: #4b5563;
+    color: rgba(255,255,255,0.5);
     margin-top: 2rem;
     max-width: 480px;
     line-height: 1.7;
@@ -176,7 +175,7 @@
     font-family: 'Space Mono', monospace;
     font-size: 0.6rem;
     letter-spacing: 0.3em;
-    color: #9e9e9e;
+    color: rgba(255,255,255,0.3);
     writing-mode: vertical-rl;
     opacity: 0;
     animation: fadeUp 1s ease 1.2s forwards;
@@ -187,7 +186,7 @@
     display: block;
     width: 1px;
     height: 60px;
-    background: linear-gradient(to bottom, #9e9e9e, transparent);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
     margin: 1rem auto 0;
   }
 
@@ -199,24 +198,24 @@
   /* DIVIDER */
   .divider {
     height: 4px;
-    background: linear-gradient(90deg, transparent, #1a3560, #9e9e9e, transparent);
+    background: linear-gradient(90deg, transparent, #E8870A, rgba(255,255,255,0.2), transparent);
   }
 
-  /* WHITE SECTIONS */
+  /* SECTIONS */
   .section {
     padding: 7rem 6vw;
-    background: #ffffff;
+    background: #0d0d0d;
   }
 
   .section.alt {
-    background: #f4f6f9;
+    background: #111111;
   }
 
   .section-label {
     font-family: 'Space Mono', monospace;
     font-size: 0.62rem;
     letter-spacing: 0.45em;
-    color: #1a3560;
+    color: #E8870A;
     text-transform: uppercase;
     margin-bottom: 2rem;
     display: flex;
@@ -229,7 +228,7 @@
     display: inline-block;
     width: 40px;
     height: 2px;
-    background: #1a3560;
+    background: #E8870A;
   }
 
   .section-title {
@@ -238,32 +237,32 @@
     line-height: 1;
     letter-spacing: 0.03em;
     margin-bottom: 2.5rem;
-    color: #111827;
+    color: #ffffff;
   }
 
   .section-title em {
-    color: #1a3560;
+    color: #E8870A;
     font-style: normal;
   }
 
   .body-text {
     font-size: 1.18rem;
     line-height: 1.9;
-    color: #1f2937;
+    color: rgba(255,255,255,0.65);
     max-width: 720px;
     font-weight: 400;
   }
 
   .body-text p + p { margin-top: 1.5rem; }
 
-  /* XDIAVEL SECTION — light version */
+  /* XDIAVEL SECTION */
   .xdiavel-section {
-    background: #f0f4f9;
+    background: #111111;
     padding: 8rem 6vw;
     position: relative;
     overflow: hidden;
-    border-top: 1px solid #dde3ec;
-    border-bottom: 1px solid #dde3ec;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
   .xdiavel-section::before {
@@ -274,7 +273,7 @@
     transform: translateY(-50%);
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(8rem, 20vw, 22rem);
-    color: rgba(26,53,96,0.05);
+    color: rgba(232,135,10,0.05);
     line-height: 1;
     pointer-events: none;
     white-space: nowrap;
@@ -294,9 +293,9 @@
   }
 
   .spec-card {
-    background: #ffffff;
-    border: 1px solid #dde3ec;
-    border-left: 4px solid #1a3560;
+    background: #0d0d0d;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-left: 4px solid #E8870A;
     padding: 2rem;
     margin-top: 3rem;
   }
@@ -305,7 +304,7 @@
     font-family: 'Space Mono', monospace;
     font-size: 0.65rem;
     letter-spacing: 0.4em;
-    color: #1a3560;
+    color: #E8870A;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
   }
@@ -315,21 +314,23 @@
     justify-content: space-between;
     align-items: baseline;
     padding: 0.75rem 0;
-    border-bottom: 1px solid #edf0f4;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     font-size: 1rem;
   }
 
   .spec-row:last-child { border-bottom: none; }
-  .spec-key { color: #6b7280; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; }
-  .spec-val { color: #111827; font-style: italic; }
+  .spec-key { color: rgba(255,255,255,0.4); font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; }
+  .spec-val { color: #ffffff; font-style: italic; }
 
-  /* GLOSSY BLACK SHOWCASE — deep blue instead of near-black */
+  /* GLOSSY BLACK SHOWCASE */
   .black-showcase {
-    background: #1a3560;
+    background: #0d0d0d;
     padding: 6rem 6vw;
     position: relative;
     overflow: hidden;
     text-align: center;
+    border-top: 1px solid rgba(232,135,10,0.2);
+    border-bottom: 1px solid rgba(232,135,10,0.2);
   }
 
   .black-showcase::before {
@@ -339,7 +340,7 @@
     transform: translate(-50%, -50%);
     width: 600px; height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(232,135,10,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -355,16 +356,16 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.25rem;
     font-style: italic;
-    color: rgba(255,255,255,0.65);
+    color: rgba(255,255,255,0.5);
     margin-top: 1.5rem;
     position: relative; z-index: 1;
     letter-spacing: 0.1em;
   }
 
-  /* FOOTER — matches site */
+  /* FOOTER */
   footer {
-    border-top: 1px solid #c4c4c4;
-    padding: 2rem 2.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 1.75rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -374,14 +375,16 @@
 
   .footer-logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.05em;
-    color: #1a3560;
+    font-size: 1.25rem;
+    letter-spacing: 0.08em;
+    color: #ffffff;
   }
+
+  .footer-logo span { color: #E8870A; }
 
   .footer-copy {
     font-size: 0.75rem;
-    color: #9e9e9e;
+    color: rgba(255,255,255,0.35);
   }
 </style>
 </head>
@@ -483,8 +486,8 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">DUCATI HUB</div>
-  <p class="footer-copy">Personal ownership tracker. Not affiliated with Ducati Motor Holding.</p>
+  <div class="footer-logo">DKM <span>&middot;</span> Ducati</div>
+  <p class="footer-copy">Personal site &middot; Not affiliated with Ducati Motor Holding &middot; Owner area is password protected</p>
 </footer>
 
 </body>
