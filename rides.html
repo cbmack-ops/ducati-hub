@@ -373,6 +373,13 @@
           <label for="f-notes">Notes (optional)</label>
           <textarea id="f-notes" placeholder="Roads, conditions, highlights..."></textarea>
         </div>
+        <div class="form-row">
+          <label for="f-photo">Ride Photo (optional)</label>
+          <input type="file" id="f-photo" accept="image/*" style="padding:0.5rem 0; cursor:pointer;">
+          <div id="photo-preview" style="display:none; margin-top:0.75rem;">
+            <img id="photo-thumb" style="max-height:160px; max-width:100%; border:1px solid var(--border); display:block;" alt="Preview">
+          </div>
+        </div>
         <button type="submit" class="btn-submit">Log Ride</button>
       </form>
     </div>
@@ -438,6 +445,7 @@
               <div class="entry-route">${route}</div>
               ${e.duration ? `<div class="entry-meta">${e.duration}</div>` : ''}
               ${e.notes    ? `<div class="entry-notes">${e.notes}</div>` : ''}
+              ${e.photo    ? `<img src="${e.photo}" style="margin-top:0.75rem;max-height:140px;max-width:100%;border:1px solid var(--border);display:block;" alt="Ride photo">` : ''}
             </div>
             <div class="entry-right">
               <div class="entry-dist">${parseFloat(e.distance).toLocaleString('en-CA', { maximumFractionDigits: 0 })} <span>km</span></div>
@@ -452,22 +460,48 @@
       render();
     };
 
+    // Photo preview
+    document.getElementById('f-photo').addEventListener('change', function() {
+      const file = this.files[0];
+      if (!file) { document.getElementById('photo-preview').style.display = 'none'; return; }
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('photo-thumb').src = e.target.result;
+        document.getElementById('photo-preview').style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+
     document.getElementById('add-form').addEventListener('submit', function(ev) {
       ev.preventDefault();
-      const data = load();
-      data.push({
-        id:       Date.now(),
-        date:     document.getElementById('f-date').value,
-        distance: document.getElementById('f-dist').value,
-        from:     document.getElementById('f-from').value.trim(),
-        to:       document.getElementById('f-to').value.trim(),
-        duration: document.getElementById('f-duration').value.trim(),
-        notes:    document.getElementById('f-notes').value.trim()
-      });
-      save(data);
-      this.reset();
-      document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
-      render();
+      const photoFile = document.getElementById('f-photo').files[0];
+
+      const saveEntry = (photoData) => {
+        const data = load();
+        data.push({
+          id:       Date.now(),
+          date:     document.getElementById('f-date').value,
+          distance: document.getElementById('f-dist').value,
+          from:     document.getElementById('f-from').value.trim(),
+          to:       document.getElementById('f-to').value.trim(),
+          duration: document.getElementById('f-duration').value.trim(),
+          notes:    document.getElementById('f-notes').value.trim(),
+          photo:    photoData || null
+        });
+        save(data);
+        this.reset();
+        document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+        document.getElementById('photo-preview').style.display = 'none';
+        render();
+      };
+
+      if (photoFile) {
+        const reader = new FileReader();
+        reader.onload = e => saveEntry(e.target.result);
+        reader.readAsDataURL(photoFile);
+      } else {
+        saveEntry(null);
+      }
     });
 
     document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
