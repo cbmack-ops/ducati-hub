@@ -85,29 +85,9 @@
       overflow: hidden;
     }
 
-    /* Blue slash accent */
-    #hero::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0;
-      width: 38%;
-      height: 100%;
-      background: linear-gradient(135deg, transparent 42%, rgba(26,53,96,0.06) 42%);
-      pointer-events: none;
-    }
-
-    /* Ghost year watermark */
-    .hero-watermark {
-      position: absolute;
-      right: -0.5rem;
-      bottom: 4rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(140px, 22vw, 280px);
-      color: rgba(0,0,0,0.04);
-      line-height: 1;
-      user-select: none;
-      pointer-events: none;
-      letter-spacing: -0.02em;
+    /* Dark fade to right so black-background bike photo blends in */
+    #hero {
+      background: linear-gradient(to right, var(--bg) 42%, #0d0d0d 100%);
     }
 
     /* Thin vertical blue bar */
@@ -119,16 +99,29 @@
       background: linear-gradient(to bottom, var(--blue), transparent);
     }
 
-    /* Bike image */
+    /* Ghost year watermark — visible only on light left side */
+    .hero-watermark {
+      position: absolute;
+      left: 38%;
+      bottom: 3rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(100px, 16vw, 220px);
+      color: rgba(0,0,0,0.05);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      letter-spacing: -0.02em;
+    }
+
+    /* Bike image — sits in the dark right half */
     .hero-bike {
       position: absolute;
       right: 0;
       bottom: 0;
-      height: 80%;
-      max-width: 52%;
+      height: 88%;
+      max-width: 55%;
       object-fit: contain;
       object-position: bottom right;
-      opacity: 0.92;
       pointer-events: none;
     }
 
@@ -466,13 +459,7 @@
     <div class="hero-bar"></div>
     <div class="hero-watermark">2022</div>
 
-    <!-- Bike image — replace bike-hero.jpg with your own photo, or leave the URL below -->
-    <img
-      class="hero-bike"
-      src="https://ultimatemotorcycling.com/wp-content/uploads/2022/02/2022-ducati-xdiavel-nera-first-look-luxury-motorcycle-Poltrona-Frau-20.jpg"
-      alt="2022 Ducati XDiavel S"
-      onerror="this.style.display='none'"
-    />
+    <img class="hero-bike" src="img/bike-front.jpg" alt="2022 Ducati XDiavel S" />
 
     <div class="hero-content">
       <p class="hero-eyebrow">Ontario, Canada &mdash; My Garage</p>

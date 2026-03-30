@@ -164,6 +164,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
+      background: #000;
     }
 
     .hero-img {
@@ -547,16 +548,7 @@
       </div>
 
       <div class="hero-img-wrap">
-        <img
-          class="hero-img"
-          src="https://ultimatemotorcycling.com/wp-content/uploads/2022/02/2022-ducati-xdiavel-nera-first-look-luxury-motorcycle-Poltrona-Frau-20.jpg"
-          alt="2022 Ducati XDiavel S"
-          onerror="this.style.display='none'; document.querySelector('.hero-img-placeholder').style.display='flex';"
-        />
-        <div class="hero-img-placeholder" style="display:none">
-          <span>Add a photo of your bike</span>
-          <span style="font-size:0.65rem; opacity:0.6">Replace the image URL in bike.html</span>
-        </div>
+        <img class="hero-img" src="img/bike-rear.jpg" alt="2022 Ducati XDiavel S" />
       </div>
     </div>
   </div>
@@ -570,21 +562,8 @@
       <div class="section">
         <h2 class="section-title">Photos</h2>
         <div class="photo-grid">
-          <img
-            src="https://ultimatemotorcycling.com/wp-content/uploads/2022/02/2022-ducati-xdiavel-nera-first-look-luxury-motorcycle-Poltrona-Frau-38.jpg"
-            alt="Ducati XDiavel S side profile"
-            onerror="this.style.background='var(--bg3)'; this.alt=''; this.style.minHeight='200px';"
-          />
-          <img
-            src="https://ultimatemotorcycling.com/wp-content/uploads/2022/02/2022-ducati-xdiavel-nera-first-look-luxury-motorcycle-Poltrona-Frau-45.jpg"
-            alt="Ducati XDiavel S front"
-            onerror="this.style.background='var(--bg3)'; this.alt=''; this.style.minHeight='160px';"
-          />
-          <img
-            src="https://cloudfront-us-east-1.images.arcpublishing.com/octane/SN46RRUF35EHXK3V4BM54CV7Z4.jpg"
-            alt="Ducati XDiavel S detail"
-            onerror="this.style.background='var(--bg3)'; this.alt=''; this.style.minHeight='160px';"
-          />
+          <img src="img/bike-front.jpg" alt="2022 Ducati XDiavel S — front" style="background:#000;" />
+          <img src="img/bike-rear.jpg"  alt="2022 Ducati XDiavel S — rear"  style="background:#000;" />
         </div>
         <p style="font-size:0.72rem; color:var(--muted); margin-top:0.75rem;">
           To add your own photos: save images to the repo folder and update the <code>src</code> values above.
