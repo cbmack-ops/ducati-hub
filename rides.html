@@ -10,9 +10,11 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      --amber:  #E8870A;
+      --amber-h:#d07809;
       --blue:   #1a3560;
       --blue-h: #0f2240;
-      --bg:     #f0f0f0;
+      --bg:     #ffffff;
       --bg2:    #e8e8e8;
       --bg3:    #dcdcdc;
       --border: #c4c4c4;
@@ -39,29 +41,48 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 2.5rem;
-      background: rgba(240,240,240,0.96);
+      background: rgba(255,255,255,0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
+    .nav-left { display: flex; align-items: center; gap: 2.5rem; }
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--blue);
+      font-size: 1.6rem;
+      color: var(--text);
       letter-spacing: 0.05em;
       text-decoration: none;
+      white-space: nowrap;
     }
+    .nav-logo span { color: var(--amber); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       color: var(--dim);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--blue); }
+    .nav-links a:hover, .nav-links a.active { color: var(--amber); }
+    .nav-owner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.9rem;
+      transition: all 0.2s;
+    }
+    .nav-owner:hover { border-color: var(--amber); color: var(--amber); }
 
     /* PAGE HEADER */
     .page-header {
@@ -302,15 +323,15 @@
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">DUCATI</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="bike.html">My Bike</a></li>
-      <li><a href="ducati.html">History</a></li>
-      <li><a href="maintenance.html">Maintenance</a></li>
-      <li><a href="rides.html" class="active">Ride Log</a></li>
-      <li><a href="exam.html">M Exam</a></li>
-    </ul>
+    <div class="nav-left">
+      <a href="index.html" class="nav-logo">DKM <span>&middot;</span> Ducati</a>
+      <ul class="nav-links">
+        <li><a href="bike.html">The Bike</a></li>
+        <li><a href="rides.html" class="active">Rides</a></li>
+        <li><a href="ducati.html">History</a></li>
+      </ul>
+    </div>
+    <a href="maintenance.html" class="nav-owner">&#x1F512; Owner Area</a>
   </nav>
 
   <div class="page-header">

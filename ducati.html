@@ -15,7 +15,7 @@
     overflow-x: hidden;
   }
 
-  /* NAV — matches site */
+  /* NAV */
   nav {
     position: sticky;
     top: 0;
@@ -25,22 +25,27 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 2.5rem;
-    background: rgba(240,240,240,0.96);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid #e0e0e0;
   }
+
+  .nav-left { display: flex; align-items: center; gap: 2.5rem; }
 
   .nav-logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.75rem;
+    font-size: 1.6rem;
     letter-spacing: 0.05em;
-    color: #1a3560;
+    color: #111111;
     text-decoration: none;
+    white-space: nowrap;
   }
+
+  .nav-logo span { color: #E8870A; }
 
   .nav-links {
     display: flex;
-    gap: 2.25rem;
+    gap: 2rem;
     list-style: none;
   }
 
@@ -50,13 +55,31 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #555555;
+    color: #666666;
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .nav-links a:hover,
-  .nav-links a.active { color: #1a3560; }
+  .nav-links a.active { color: #E8870A; }
+
+  .nav-owner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #111111;
+    text-decoration: none;
+    border: 1px solid #e0e0e0;
+    padding: 0.35rem 0.9rem;
+    transition: all 0.2s;
+  }
+
+  .nav-owner:hover { border-color: #E8870A; color: #E8870A; }
 
   @media (max-width: 640px) {
     nav { padding: 0 1.25rem; }
@@ -365,15 +388,15 @@
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-logo">DUCATI</a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="bike.html">My Bike</a></li>
-    <li><a href="ducati.html" class="active">History</a></li>
-    <li><a href="maintenance.html">Maintenance</a></li>
-    <li><a href="rides.html">Ride Log</a></li>
-    <li><a href="exam.html">M Exam</a></li>
-  </ul>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">DKM <span>&middot;</span> Ducati</a>
+    <ul class="nav-links">
+      <li><a href="bike.html">The Bike</a></li>
+      <li><a href="rides.html">Rides</a></li>
+      <li><a href="ducati.html" class="active">History</a></li>
+    </ul>
+  </div>
+  <a href="maintenance.html" class="nav-owner">&#x1F512; Owner Area</a>
 </nav>
 
 <!-- HERO -->
