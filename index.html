@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ducati Hub</title>
+  <title>DKM Ducati</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue:   #1a3560;
-      --blue-h: #0f2240;
-      --bg:     #f0f0f0;
-      --bg2:    #e8e8e8;
-      --bg3:    #dcdcdc;
-      --border: #c4c4c4;
-      --text:   #111111;
-      --dim:    #555555;
-      --muted:  #9e9e9e;
+      --amber:   #E8870A;
+      --amber-h: #d07809;
+      --bg:      #ffffff;
+      --bg2:     #f5f5f5;
+      --bg3:     #eeeeee;
+      --border:  #e0e0e0;
+      --text:    #111111;
+      --dim:     #666666;
+      --muted:   #aaaaaa;
     }
 
     html { scroll-behavior: smooth; }
@@ -40,25 +40,32 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 2.5rem;
-      background: rgba(240,240,240,0.96);
+      background: rgba(255,255,255,0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--blue);
+      font-size: 1.6rem;
+      color: var(--text);
       letter-spacing: 0.05em;
       text-decoration: none;
+      white-space: nowrap;
     }
+    .nav-logo span { color: var(--amber); }
 
     .nav-links {
       list-style: none;
       display: flex;
-      gap: 2.25rem;
+      gap: 2rem;
     }
-
     .nav-links a {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.8rem;
@@ -69,125 +76,140 @@
       text-decoration: none;
       transition: color 0.2s;
     }
+    .nav-links a:hover { color: var(--amber); }
 
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--blue); }
+    .nav-owner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.9rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-owner:hover { border-color: var(--amber); color: var(--amber); }
 
     /* ── HERO ────────────────────────────────────── */
     #hero {
       position: relative;
-      z-index: 2;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 80px 2.5rem 5rem;
       overflow: hidden;
+      /* Light left, dark right — blends with black-background bike photo */
+      background: linear-gradient(to right, #ffffff 44%, #0d0d0d 100%);
     }
 
-    /* Dark fade to right so black-background bike photo blends in */
-    #hero {
-      background: linear-gradient(to right, var(--bg) 42%, #0d0d0d 100%);
-    }
-
-    /* Thin vertical blue bar */
-    .hero-bar {
+    /* Diagonal speed lines */
+    #hero::before {
+      content: '';
       position: absolute;
-      top: 12%; left: 0;
-      width: 3px;
-      height: 55%;
-      background: linear-gradient(to bottom, var(--blue), transparent);
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        72deg,
+        transparent 0px,
+        transparent 55px,
+        rgba(232,135,10,0.05) 55px,
+        rgba(232,135,10,0.05) 57px,
+        transparent 57px,
+        transparent 76px,
+        rgba(0,0,0,0.02) 76px,
+        rgba(0,0,0,0.02) 77px
+      );
+      pointer-events: none;
+      z-index: 0;
     }
 
-    /* Ghost year watermark — visible only on light left side */
-    .hero-watermark {
+    /* Ghost word */
+    .hero-ghost {
       position: absolute;
-      left: 38%;
-      bottom: 3rem;
+      left: 1%;
+      top: 50%;
+      transform: translateY(-52%);
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(100px, 16vw, 220px);
-      color: rgba(0,0,0,0.05);
-      line-height: 1;
+      font-size: clamp(90px, 15vw, 190px);
+      color: rgba(0,0,0,0.04);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
       user-select: none;
       pointer-events: none;
-      letter-spacing: -0.02em;
+      z-index: 0;
     }
 
-    /* Bike image — sits in the dark right half */
+    /* Bike photo — sits in the dark right half */
     .hero-bike {
       position: absolute;
       right: 0;
       bottom: 0;
       height: 88%;
-      max-width: 55%;
+      max-width: 56%;
       object-fit: contain;
       object-position: bottom right;
       pointer-events: none;
+      z-index: 1;
     }
 
-    .hero-content {
+    /* Centre section grows to fill viewport */
+    .hero-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 100px 2.5rem 2rem;
       position: relative;
-      max-width: 860px;
+      z-index: 2;
     }
+
+    .hero-content { max-width: 540px; }
 
     .hero-eyebrow {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--blue);
-      margin-bottom: 1.2rem;
+      letter-spacing: 0.25em;
+      color: var(--amber);
+      margin-bottom: 1.4rem;
       animation: fadeUp 0.7s 0.1s both;
     }
 
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 13vw, 148px);
-      line-height: 0.88;
-      letter-spacing: 0.015em;
-      animation: fadeUp 0.7s 0.2s both;
+      font-size: clamp(52px, 9vw, 108px);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      margin-bottom: 1.75rem;
+      animation: fadeUp 0.7s 0.25s both;
     }
+    .hero-title .hi { color: var(--amber); }
 
-    .hero-model {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(28px, 5.5vw, 64px);
-      line-height: 1.1;
-      letter-spacing: 0.06em;
-      color: var(--dim);
-      animation: fadeUp 0.7s 0.3s both;
-    }
-
-    .hero-rule {
-      width: 72px;
-      height: 3px;
-      background: var(--blue);
-      margin: 2rem 0;
-      animation: fadeUp 0.7s 0.4s both;
-    }
-
-    .hero-tagline {
-      font-size: 1.05rem;
+    .hero-sub {
+      font-size: 0.98rem;
       font-weight: 300;
       color: var(--dim);
-      max-width: 480px;
-      line-height: 1.75;
-      margin-bottom: 2.75rem;
-      animation: fadeUp 0.7s 0.5s both;
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s 0.4s both;
     }
 
     .hero-cta {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      animation: fadeUp 0.7s 0.6s both;
+      animation: fadeUp 0.7s 0.5s both;
     }
 
     /* ── BUTTONS ─────────────────────────────────── */
     .btn {
       display: inline-block;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.16em;
@@ -197,117 +219,135 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-
-    .btn-primary {
-      background: var(--blue);
-      color: #fff;
-    }
-
-    .btn-primary:hover { background: var(--blue-h); }
-
+    .btn-primary { background: var(--amber); color: #fff; }
+    .btn-primary:hover { background: var(--amber-h); }
     .btn-outline {
       background: transparent;
       color: var(--text);
       border: 1px solid var(--border);
     }
+    .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
 
-    .btn-outline:hover {
-      border-color: var(--blue);
-      color: var(--blue);
-    }
-
-    /* Scroll indicator */
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      left: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: var(--muted);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    .scroll-line {
-      width: 32px;
-      height: 1px;
-      background: var(--muted);
-      animation: pulseWidth 2s ease-in-out infinite;
-    }
-
-    @keyframes pulseWidth {
-      0%, 100% { width: 32px; opacity: 0.4; }
-      50%       { width: 48px; opacity: 1;   }
-    }
-
-    /* ── STATS BAR ───────────────────────────────── */
-    #stats {
+    /* ── HERO STAT BAR ───────────────────────────── */
+    .hero-stats {
       position: relative;
       z-index: 2;
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 2.75rem 2.5rem;
-    }
-
-    .stats-inner {
-      max-width: 1100px;
-      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(10px);
     }
 
-    .stat {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
+    .hero-stat {
+      padding: 1.2rem 1.75rem;
+      border-right: 1px solid rgba(0,0,0,0.08);
     }
+    .hero-stat:last-child { border-right: none; }
 
-    .stat-value {
+    .hs-val {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8rem;
-      color: var(--blue);
+      font-size: 1.45rem;
+      color: var(--text);
+      letter-spacing: 0.04em;
       line-height: 1;
     }
-
-    .stat-label {
+    .hs-lbl {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
+      font-size: 0.62rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--muted);
+      margin-top: 0.3rem;
     }
 
-    /* ── SECTIONS ────────────────────────────────── */
-    #sections {
-      position: relative;
-      z-index: 2;
-      padding: 6rem 2.5rem;
-      max-width: 1100px;
+    /* ── RIDER BIO ───────────────────────────────── */
+    #bio {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4.5rem 2.5rem;
+    }
+
+    .bio-wrap {
+      max-width: 920px;
       margin: 0 auto;
     }
 
     .section-eyebrow {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--blue);
-      margin-bottom: 1rem;
+      letter-spacing: 0.24em;
+      color: var(--amber);
+      margin-bottom: 1.75rem;
+    }
+
+    .bio-row {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .bio-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      flex-shrink: 0;
+      border: 3px solid var(--amber);
+    }
+
+    .bio-text { flex: 1; min-width: 220px; }
+
+    .bio-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+
+    .bio-copy {
+      font-size: 0.92rem;
+      color: var(--dim);
+      line-height: 1.85;
+    }
+
+    .bio-tag {
+      flex-shrink: 0;
+      align-self: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      padding: 0.45rem 1rem;
+      white-space: nowrap;
+    }
+
+    /* ── CARDS ───────────────────────────────────── */
+    #sections {
+      padding: 6rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     .section-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(28px, 4.5vw, 48px);
       letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      font-size: 0.92rem;
+      color: var(--dim);
       margin-bottom: 3rem;
     }
 
@@ -320,7 +360,7 @@
 
     .card {
       position: relative;
-      background: var(--bg2);
+      background: var(--bg);
       padding: 2.75rem;
       text-decoration: none;
       color: inherit;
@@ -329,54 +369,48 @@
       overflow: hidden;
       transition: background 0.2s;
     }
-
     .card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: var(--blue);
+      background: var(--amber);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.3s ease;
     }
-
-    .card:hover { background: var(--bg3); }
+    .card:hover { background: var(--bg2); }
     .card:hover::before { transform: scaleX(1); }
 
     .card-num {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 3.5rem;
-      color: rgba(0,0,0,0.06);
+      color: rgba(0,0,0,0.05);
       line-height: 1;
       margin-bottom: 1.5rem;
       user-select: none;
     }
-
     .card-tag {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      color: var(--blue);
-      margin-bottom: 0.6rem;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
     }
-
     .card-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.9rem;
       letter-spacing: 0.03em;
       margin-bottom: 1rem;
     }
-
     .card-desc {
       font-size: 0.88rem;
       color: var(--dim);
       line-height: 1.75;
       flex: 1;
     }
-
     .card-link {
       display: inline-block;
       margin-top: 2rem;
@@ -388,17 +422,13 @@
       color: var(--muted);
       transition: color 0.2s;
     }
-
-    .card:hover .card-link { color: var(--blue); }
+    .card:hover .card-link { color: var(--amber); }
 
     /* ── FOOTER ──────────────────────────────────── */
     footer {
-      position: relative;
-      z-index: 2;
       border-top: 1px solid var(--border);
       padding: 2rem 2.5rem;
     }
-
     .footer-inner {
       max-width: 1100px;
       margin: 0 auto;
@@ -408,133 +438,138 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
     .footer-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.4rem;
-      color: var(--blue);
       letter-spacing: 0.05em;
+      color: var(--text);
     }
+    .footer-logo span { color: var(--amber); }
+    .footer-copy { font-size: 0.75rem; color: var(--muted); }
 
-    .footer-copy {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    /* ── ANIMATIONS ──────────────────────────────── */
+    /* ── ANIMATION ───────────────────────────────── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ── RESPONSIVE ──────────────────────────────── */
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       nav { padding: 0 1.25rem; }
-      .nav-links { gap: 1.25rem; }
-      #hero { padding: 72px 1.25rem 4rem; }
-      .hero-watermark { display: none; }
-      .hero-bar { display: none; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.72rem; }
+      .hero-main { padding: 88px 1.25rem 2rem; }
       .hero-bike { display: none; }
+      .hero-ghost { display: none; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .hero-stat:nth-child(2) { border-right: none; }
+      #bio { padding: 3rem 1.25rem; }
       #sections { padding: 4rem 1.25rem; }
-      #stats { padding: 2rem 1.25rem; }
+      .bio-tag { align-self: auto; }
       footer { padding: 1.75rem 1.25rem; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">DUCATI</a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="bike.html">My Bike</a></li>
-      <li><a href="ducati.html">History</a></li>
-      <li><a href="maintenance.html">Maintenance</a></li>
-      <li><a href="rides.html">Ride Log</a></li>
-      <li><a href="exam.html">M Exam</a></li>
-    </ul>
+    <div class="nav-left">
+      <a href="index.html" class="nav-logo">DKM <span>&middot;</span> Ducati</a>
+      <ul class="nav-links">
+        <li><a href="bike.html">The Bike</a></li>
+        <li><a href="rides.html">Rides</a></li>
+        <li><a href="ducati.html">History</a></li>
+      </ul>
+    </div>
+    <a href="maintenance.html" class="nav-owner">&#x1F512; Owner Area</a>
   </nav>
 
   <section id="hero">
-    <div class="hero-bar"></div>
-    <div class="hero-watermark">2022</div>
+    <div class="hero-ghost">XDiavel</div>
+    <img class="hero-bike" src="img/bike-front.jpg" alt="2022 Ducati XDiavel S">
 
-    <img class="hero-bike" src="img/bike-front.jpg" alt="2022 Ducati XDiavel S" />
-
-    <div class="hero-content">
-      <p class="hero-eyebrow">Ontario, Canada &mdash; My Garage</p>
-      <h1 class="hero-title">DUCATI</h1>
-      <p class="hero-model">2022 XDiavel S</p>
-      <div class="hero-rule"></div>
-      <p class="hero-tagline">One bike. Every service record. Every ride. Track your machine and ace your M license &mdash; all in one place.</p>
-      <div class="hero-cta">
-        <a href="bike.html" class="btn btn-primary">View My Bike</a>
-        <a href="exam.html" class="btn btn-outline">Start M Exam Prep</a>
+    <div class="hero-main">
+      <div class="hero-content">
+        <p class="hero-eyebrow">2022 XDiavel S &middot; Tecumseh, Ontario</p>
+        <h1 class="hero-title">Life at full<br><span class="hi">throttle.</span></h1>
+        <p class="hero-sub">One machine. Every road. A look at what drives me outside the office — the rides, the routes, and the bike behind it all.</p>
+        <div class="hero-cta">
+          <a href="bike.html" class="btn btn-primary">Explore the Bike</a>
+          <a href="rides.html" class="btn btn-outline">View Ride Log</a>
+        </div>
       </div>
     </div>
 
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      Scroll
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hs-val">2022</div>
+        <div class="hs-lbl">Model Year</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hs-val">XDiavel S</div>
+        <div class="hs-lbl">Configuration</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hs-val">2024</div>
+        <div class="hs-lbl">Licensed</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hs-val">Tecumseh</div>
+        <div class="hs-lbl">Ontario</div>
+      </div>
     </div>
   </section>
 
-  <div id="stats">
-    <div class="stats-inner">
-      <div class="stat">
-        <div class="stat-value" id="statKm">0</div>
-        <div class="stat-label">Kilometres Ridden</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="statRides">0</div>
-        <div class="stat-label">Rides Logged</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="statServices">0</div>
-        <div class="stat-label">Services Done</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="statBestScore">&mdash;</div>
-        <div class="stat-label">Best Exam Score</div>
+  <!-- RIDER BIO -->
+  <section id="bio">
+    <div class="bio-wrap">
+      <p class="section-eyebrow">The Rider</p>
+      <div class="bio-row">
+        <img class="bio-photo" src="img/david.jpg" alt="David K. MacLeod" onerror="this.style.display='none'">
+        <div class="bio-text">
+          <h3 class="bio-name">David K. MacLeod</h3>
+          <p class="bio-copy">Got his motorcycle license in 2024, bought the XDiavel S, and hasn't looked back. No starter bike. No hesitation. Some decisions don't need explaining.</p>
+        </div>
+        <div class="bio-tag">Rider since 2024</div>
       </div>
     </div>
-  </div>
+  </section>
 
+  <!-- CARDS -->
   <section id="sections">
     <p class="section-eyebrow">The Hub</p>
-    <h2 class="section-title">Everything In One Place</h2>
+    <h2 class="section-title">Everything in one place.</h2>
+    <p class="section-sub">Full specs, ride history, and the story of the machine and the brand.</p>
+
     <div class="cards">
 
       <a href="bike.html" class="card">
         <div class="card-num">01</div>
         <div class="card-tag">The Machine</div>
-        <h3 class="card-title">My Bike</h3>
-        <p class="card-desc">2022 Ducati XDiavel S — glossy black. Full specs, ownership history, and everything about the machine.</p>
+        <h3 class="card-title">The Bike</h3>
+        <p class="card-desc">2022 Ducati XDiavel S — full specs, ownership history, and what makes it worth owning.</p>
         <span class="card-link">View Profile &rarr;</span>
       </a>
 
-      <a href="maintenance.html" class="card">
-        <div class="card-num">02</div>
-        <div class="card-tag">Service Records</div>
-        <h3 class="card-title">Maintenance Log</h3>
-        <p class="card-desc">Track oil changes, valve adjustments, tire swaps, and every service interval. Never lose a receipt again.</p>
-        <span class="card-link">View Log &rarr;</span>
-      </a>
-
       <a href="rides.html" class="card">
-        <div class="card-num">03</div>
+        <div class="card-num">02</div>
         <div class="card-tag">Routes &amp; Distances</div>
         <h3 class="card-title">Ride Log</h3>
-        <p class="card-desc">Log routes, distances, and notes. Build a permanent record of every kilometre from the commute to the canyon run.</p>
+        <p class="card-desc">Routes, distances, and notes from every ride — from local streets to longer runs.</p>
         <span class="card-link">View Rides &rarr;</span>
       </a>
 
-      <a href="exam.html" class="card">
-        <div class="card-num">04</div>
-        <div class="card-tag">Ontario M License</div>
-        <h3 class="card-title">M Exam Prep</h3>
-        <p class="card-desc">Practice MTO handbook questions on road signs, rules, and safe riding. Track your scores and close the gap.</p>
-        <span class="card-link">Start Studying &rarr;</span>
+      <a href="ducati.html" class="card">
+        <div class="card-num">03</div>
+        <div class="card-tag">Brand History</div>
+        <h3 class="card-title">Ducati History</h3>
+        <p class="card-desc">The brand behind the machine — from Bologna to the world's most iconic motorcycles.</p>
+        <span class="card-link">Explore &rarr;</span>
       </a>
 
     </div>
@@ -542,33 +577,10 @@
 
   <footer>
     <div class="footer-inner">
-      <div class="footer-logo">DUCATI HUB</div>
-      <p class="footer-copy">Personal ownership tracker. Not affiliated with Ducati Motor Holding.</p>
+      <div class="footer-logo">DKM <span>&middot;</span> Ducati</div>
+      <p class="footer-copy">Personal site &middot; Not affiliated with Ducati Motor Holding &middot; Owner area is password protected</p>
     </div>
   </footer>
-
-  <script>
-    (function () {
-      // Rides
-      const rides = JSON.parse(localStorage.getItem('rideLog') || '[]');
-      const totalKm = rides.reduce((s, r) => s + (parseFloat(r.distance) || 0), 0);
-      document.getElementById('statKm').textContent = totalKm > 0
-        ? totalKm.toLocaleString('en-CA', { maximumFractionDigits: 0 })
-        : '0';
-      document.getElementById('statRides').textContent = rides.length;
-
-      // Services
-      const services = JSON.parse(localStorage.getItem('maintenanceLog') || '[]');
-      document.getElementById('statServices').textContent = services.length;
-
-      // Best exam score
-      const history = JSON.parse(localStorage.getItem('examHistory') || '[]');
-      if (history.length > 0) {
-        const best = Math.max(...history.map(h => Math.round((h.score / h.total) * 100)));
-        document.getElementById('statBestScore').textContent = best + '%';
-      }
-    })();
-  </script>
 
 </body>
 </html>
